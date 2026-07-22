@@ -106,11 +106,12 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--text-h);
+  margin-top: -9px;
 }
 .role-option {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 14px;
   font-size: 14px;
   font-weight: 400;
   color: var(--text);
@@ -119,6 +120,7 @@
 }
 .role-option input {
   margin: 0;
+  margin-right: 8px;
   accent-color: #5b4fe8;
 }
 
