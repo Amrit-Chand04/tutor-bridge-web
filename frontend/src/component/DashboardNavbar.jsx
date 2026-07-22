@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/tutor_bridge_logo.png";
+import ChangePasswordModal from "./ChangePasswordModal";
 import "./DashboardNavbar.css";
 
 const MENU_ITEMS = [
   { icon: "👤", label: "Update Profile" },
-  { icon: "🔒", label: "Change Password" },
   { icon: "📅", label: "My Booking" },
   { icon: "🎓", label: "My Tutor" },
 ];
@@ -31,6 +31,7 @@ function DashboardNavbar({ user, active = "dashboard" }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const menuRef = useRef(null);
 
   const notReady = () => {
@@ -123,6 +124,18 @@ function DashboardNavbar({ user, active = "dashboard" }) {
 
               <div className="profile-dropdown-divider" />
 
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setShowChangePassword(true);
+                }}
+              >
+                <span className="dropdown-item-icon">🔒</span>
+                Change Password
+              </button>
+
               {MENU_ITEMS.map((item) => (
                 <button key={item.label} role="menuitem" className="dropdown-item" onClick={notReady}>
                   <span className="dropdown-item-icon">{item.icon}</span>
@@ -161,6 +174,10 @@ function DashboardNavbar({ user, active = "dashboard" }) {
             </div>
           </div>
         </div>
+      )}
+
+      {showChangePassword && (
+        <ChangePasswordModal onClose={() => setShowChangePassword(false)} />
       )}
     </nav>
   );
