@@ -1,0 +1,232 @@
+.dash-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  gap: 24px;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.navbar-logo img {
+  height: 60px;
+  width: 180px;
+  object-fit: contain;
+}
+
+.dash-navbar-links {
+  display: flex;
+  gap: 40px;
+}
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+.nav-pill:hover {
+  opacity: 0.85;
+}
+.nav-pill-tan {
+  background: #ac7f5e;
+  border-color: #8f6849;
+  color: #fdfbf8;
+}
+.nav-pill-green {
+  background: #34c759;
+  border-color: #299c46;
+  color: #ffffff;
+}
+.nav-pill-active {
+  border-color: #3b5bdb;
+  box-shadow: 0 0 0 2px rgba(59, 91, 219, 0.3);
+}
+
+.dash-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-h);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+}
+.icon-btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+.profile-menu {
+  position: relative;
+}
+.profile-trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.profile-label {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+.chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.15s ease;
+}
+.chevron-open {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  padding: 6px;
+  min-width: 140px;
+  z-index: 20;
+}
+.profile-dropdown button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2574c;
+  cursor: pointer;
+  font-family: inherit;
+}
+.profile-dropdown button:hover {
+  background: #fbeceb;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 25, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: modalFadeIn 0.15s ease;
+}
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: modalPopIn 0.18s ease;
+}
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.modal-box h3 {
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: var(--text-h);
+}
+.modal-box p {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 26px;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+.modal-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.modal-actions button:hover {
+  opacity: 0.9;
+}
+.modal-btn-cancel {
+  background: #f0eff5;
+  color: var(--text-h);
+}
+.modal-btn-confirm {
+  background: #e2574c;
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .dash-navbar {
+    flex-wrap: wrap;
+    padding: 16px 20px;
+  }
+  .dash-navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+}

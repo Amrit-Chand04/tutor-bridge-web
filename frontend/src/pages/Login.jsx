@@ -45,7 +45,7 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       toast.success(response.data.message);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
     } finally {
