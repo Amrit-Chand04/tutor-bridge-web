@@ -26,8 +26,34 @@ const updatePassword = async (email, hashedPassword) => {
   return result.rows[0];
 };
 
+const getAllUsers = async () => {
+  const result = await pool.query(
+    "SELECT user_id, full_name, email, role, status FROM users ORDER BY user_id",
+  );
+  return result.rows;
+};
+
+const getUserById = async (userId) => {
+  const result = await pool.query(
+    "SELECT user_id, role FROM users WHERE user_id = $1",
+    [userId],
+  );
+  return result.rows[0];
+};
+
+const deleteUserById = async (userId) => {
+  const result = await pool.query(
+    "DELETE FROM users WHERE user_id = $1 RETURNING user_id",
+    [userId],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
   updatePassword,
+  getAllUsers,
+  getUserById,
+  deleteUserById,
 };

@@ -83,9 +83,12 @@ function AdminNavbar({ user, active = "dashboard" }) {
         <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
           Manage Booking
         </a>
-        <a href="#" className="nav-pill nav-pill-tan" onClick={(e) => { e.preventDefault(); notReady(); }}>
+        <Link
+          to="/admin/manage-users"
+          className={`nav-pill nav-pill-tan ${active === "manage-users" ? "nav-pill-active" : ""}`}
+        >
           Manage User
-        </a>
+        </Link>
       </div>
 
       <div className="dash-navbar-actions">

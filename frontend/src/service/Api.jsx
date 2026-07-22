@@ -39,3 +39,11 @@ export const changePassword = (data) => {
 export const createTuitionRequest = (data) => {
   return Api.post("/api/tuition-requests", data);
 };
+
+export const getAllUsers = () => {
+  return Api.get("/api/users");
+};
+
+export const deleteUser = (id) => {
+  return Api.delete(`/api/users/${id}`);
+};

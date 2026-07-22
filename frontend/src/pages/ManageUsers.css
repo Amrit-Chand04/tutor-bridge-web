@@ -1,0 +1,162 @@
+.mu-page {
+  padding: 32px 48px 64px;
+}
+
+.mu-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.mu-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.mu-search svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.mu-search input {
+  border: none;
+  outline: none;
+  font-size: 14.5px;
+  font-family: inherit;
+  color: var(--text-h);
+  width: 100%;
+}
+
+.mu-filters {
+  display: flex;
+  gap: 10px;
+}
+.mu-filter-btn {
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.mu-filter-btn:hover {
+  border-color: #6a5cf5;
+}
+.mu-filter-active {
+  background: #5b4fe8;
+  border-color: #5b4fe8;
+  color: #fff;
+}
+
+.mu-table-wrap {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mu-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.mu-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.mu-table th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text);
+  background: #f7f6fb;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.mu-table td {
+  padding: 14px 20px;
+  font-size: 14.5px;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+}
+.mu-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.mu-table tbody tr:hover {
+  background: #fafaff;
+}
+
+.mu-role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.mu-role-student {
+  background: #e6f4ea;
+  color: #2f9e44;
+}
+.mu-role-tutor {
+  background: #ece9fe;
+  color: #5b4fe8;
+}
+.mu-role-admin {
+  background: #fdecea;
+  color: #e2574c;
+}
+
+.mu-action-delete {
+  border: none;
+  background: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+  color: #e2574c;
+}
+.mu-action-delete:hover {
+  background: #fdecea;
+}
+
+.mu-action-none {
+  color: var(--text);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .mu-page {
+    padding: 24px 20px 48px;
+  }
+  .mu-search {
+    width: 100%;
+  }
+  .mu-table-wrap {
+    overflow-x: auto;
+  }
+  .mu-table {
+    min-width: 600px;
+  }
+}

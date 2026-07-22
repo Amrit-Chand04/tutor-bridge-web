@@ -1,6 +1,13 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { findUserByEmail, createUser, updatePassword } = require("../models/userModel");
+const {
+  findUserByEmail,
+  createUser,
+  updatePassword,
+  getAllUsers,
+  getUserById,
+  deleteUserById,
+} = require("../models/userModel");
 const {
   upsertPendingRegistration,
   findPendingByEmail,
@@ -382,11 +389,55 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch users",
+      error: error.message,
+    });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const targetUser = await getUserById(id);
+    if (!targetUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    if (targetUser.role === "admin") {
+      return res.status(403).json({
+        message: "Admin accounts cannot be deleted",
+      });
+    }
+
+    await deleteUserById(id);
+
+    res.status(200).json({
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete user",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   verifyOtp,
   loginUser,
   getCurrentUser,
+  getUsers,
+  deleteUser,
   forgotPassword,
   resetPassword,
   changePassword,
