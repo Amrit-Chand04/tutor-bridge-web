@@ -96,6 +96,21 @@
   height: 20px;
 }
 
+/* Hide native browser password icons (Chrome's strong-password
+   suggestion, Edge's reveal-eye) so they don't overlap our toggle */
+.password-field input::-webkit-credentials-auto-fill-button,
+.password-field input::-webkit-strong-password-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+.password-field input::-ms-reveal,
+.password-field input::-ms-clear {
+  display: none;
+}
+
 .role-field {
   display: flex;
   align-items: center;

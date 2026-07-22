@@ -1,12 +1,17 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { findUserByEmail, createUser } = require("../models/userModel");
+const { findUserByEmail, createUser, updatePassword } = require("../models/userModel");
 const {
   upsertPendingRegistration,
   findPendingByEmail,
   deletePendingByEmail,
 } = require("../models/otpModel");
-const { sendOtpEmail } = require("../services/emailService");
+const {
+  upsertPasswordReset,
+  findPasswordResetByEmail,
+  deletePasswordResetByEmail,
+} = require("../models/passwordResetModel");
+const { sendOtpEmail, sendPasswordResetOtpEmail } = require("../services/emailService");
 
 const ALLOWED_ROLES = ["student", "tutor"];
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -232,9 +237,112 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const email = req.body.email?.trim().toLowerCase();
+
+    if (!email) {
+      return res.status(400).json({
+        message: "Email is required",
+      });
+    }
+
+    const user = await findUserByEmail(email);
+    if (!user) {
+      return res.status(404).json({
+        message: "No account found with this email",
+      });
+    }
+
+    const otp = generateOtp();
+    const expiresAt = new Date(Date.now() + OTP_TTL_MINUTES * 60 * 1000);
+
+    await upsertPasswordReset(email, otp, expiresAt);
+
+    try {
+      await sendPasswordResetOtpEmail(email, user.full_name, otp);
+    } catch (emailError) {
+      console.error(`[forgotPassword] OTP saved for ${email} but email send failed:`, emailError.message);
+      return res.status(502).json({
+        message: "OTP generated but the email could not be sent. Please try again in a moment.",
+      });
+    }
+
+    res.status(200).json({
+      message: "OTP sent to your email. Please verify to reset your password.",
+      email,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to process forgot password request",
+      error: error.message,
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { otp, newPassword } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
+
+    if (!email || !otp || !newPassword) {
+      return res.status(400).json({
+        message: "Email, OTP, and new password are required",
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        message: "Password must be at least 6 characters",
+      });
+    }
+
+    const pending = await findPasswordResetByEmail(email);
+    if (!pending) {
+      return res.status(400).json({
+        message: "No password reset request found for this email",
+      });
+    }
+
+    if (new Date(pending.expires_at) < new Date()) {
+      await deletePasswordResetByEmail(email);
+      return res.status(400).json({
+        message: "OTP expired. Please request a new one.",
+      });
+    }
+
+    if (pending.otp_code !== otp) {
+      return res.status(400).json({
+        message: "Invalid OTP",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const user = await updatePassword(email, hashedPassword);
+    await deletePasswordResetByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "No account found with this email",
+      });
+    }
+
+    res.status(200).json({
+      message: "Password reset successfully. You can now log in.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Password reset failed",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   verifyOtp,
   loginUser,
   getCurrentUser,
+  forgotPassword,
+  resetPassword,
 };

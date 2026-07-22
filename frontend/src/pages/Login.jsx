@@ -110,16 +110,9 @@ function Login() {
                 </button>
               </div>
 
-              <a
-                href="#"
-                className="forget-password"
-                onClick={(e) => {
-                  e.preventDefault();
-                  toast("Password reset is coming soon");
-                }}
-              >
+              <Link to="/forgot-password" className="forget-password">
                 Forget Password
-              </a>
+              </Link>
 
               <button type="submit" className="submit-btn" disabled={loading}>
                 {loading && <span className="spinner" />}

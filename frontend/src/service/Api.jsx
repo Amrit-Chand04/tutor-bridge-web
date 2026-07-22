@@ -15,3 +15,11 @@ export const verifyOtp = (data) => {
 export const loginUser = (data) => {
   return Api.post("/api/users/login", data);
 };
+
+export const forgotPassword = (data) => {
+  return Api.post("/api/users/forgot-password", data);
+};
+
+export const resetPassword = (data) => {
+  return Api.post("/api/users/reset-password", data);
+};

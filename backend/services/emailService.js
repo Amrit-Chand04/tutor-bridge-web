@@ -17,4 +17,13 @@ const sendOtpEmail = async (toEmail, toName, otp) => {
   });
 };
 
-module.exports = { sendOtpEmail };
+const sendPasswordResetOtpEmail = async (toEmail, toName, otp) => {
+  await transporter.sendMail({
+    from: `"TutorBridge" <${process.env.EMAIL_USER}>`,
+    to: toEmail,
+    subject: "Your TutorBridge password reset code",
+    text: `Hi ${toName},\n\nYour TutorBridge password reset code is: ${otp}\n\nThis code expires in 10 minutes. If you didn't request this, you can ignore this email.`,
+  });
+};
+
+module.exports = { sendOtpEmail, sendPasswordResetOtpEmail };

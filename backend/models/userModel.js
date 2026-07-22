@@ -17,7 +17,17 @@ const createUser = async (fullName, email, hashedPassword, role) => {
   return result.rows[0];
 };
 
+const updatePassword = async (email, hashedPassword) => {
+  const result = await pool.query(
+    `UPDATE users SET password = $1 WHERE email = $2
+     RETURNING user_id, full_name, email, role, profile_photo, status`,
+    [hashedPassword, email],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
+  updatePassword,
 };
