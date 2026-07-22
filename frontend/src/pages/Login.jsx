@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Navbar from "../component/Navbar";
 import { loginUser } from "../service/Api";
+import { getDashboardPath } from "../utils/roleRoutes";
 import "./Login.css";
 
 const EyeIcon = ({ hidden }) => (
@@ -45,7 +46,7 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       toast.success(response.data.message);
-      navigate("/dashboard");
+      navigate(getDashboardPath(response.data.user.role));
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
     } finally {
