@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ManageUsers from "./pages/ManageUsers";
+import TutorDashboard from "./pages/TutorDashboard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin/manage-users" element={<ManageUsers />} />
+        <Route path="/tutor-dashboard" element={<TutorDashboard />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import DashboardNavbar from "../component/DashboardNavbar";
-import CreateTuitionRequestModal from "../component/CreateTuitionRequestModal";
+import TutorNavbar from "../component/TutorNavbar";
 import { getDashboardPath } from "../utils/roleRoutes";
 import heroImg from "../assets/my_pic.png";
 import "./StudentDashboard.css";
@@ -14,10 +13,9 @@ const getGreeting = () => {
   return "Good Evening";
 };
 
-function StudentDashboard() {
+function TutorDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [showCreateRequest, setShowCreateRequest] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,7 +25,7 @@ function StudentDashboard() {
       return;
     }
     const parsedUser = JSON.parse(storedUser);
-    if (parsedUser.role !== "student") {
+    if (parsedUser.role !== "tutor") {
       navigate(getDashboardPath(parsedUser.role));
       return;
     }
@@ -40,7 +38,7 @@ function StudentDashboard() {
 
   return (
     <div>
-      <DashboardNavbar user={user} active="dashboard" />
+      <TutorNavbar user={user} active="dashboard" />
 
       <section className="dash-hero">
         <div className="dash-hero-text">
@@ -53,19 +51,20 @@ function StudentDashboard() {
           </h1>
 
           <div className="dash-card">
-            <h2>Find Your Perfect Tutor</h2>
+            <h2>Find Your Next Student</h2>
             <p>
-              Post your requirements.
+              Browse tuition requests posted by students.
               <br />
-              Review applications and choose the right tutor.
+              Review the details and apply to the ones that suit you.
             </p>
 
             <div className="dash-card-actions">
-              <button className="btn-create" onClick={() => setShowCreateRequest(true)}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M12 5v14M5 12h14" />
+              <button className="btn-create" onClick={notReady}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
                 </svg>
-                Create Tuition Request
+                View Available Tuitions
               </button>
               <button className="btn-support" onClick={notReady}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -84,12 +83,8 @@ function StudentDashboard() {
           <img src={heroImg} alt="" />
         </div>
       </section>
-
-      {showCreateRequest && (
-        <CreateTuitionRequestModal onClose={() => setShowCreateRequest(false)} />
-      )}
     </div>
   );
 }
 
-export default StudentDashboard;
+export default TutorDashboard;
