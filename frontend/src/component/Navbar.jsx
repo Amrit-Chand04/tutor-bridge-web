@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/tutor_bridge_logo.png";
+import "./Navbar.css";
 
 function Navbar() {
   return (

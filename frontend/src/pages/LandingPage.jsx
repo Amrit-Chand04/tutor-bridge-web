@@ -1,7 +1,7 @@
 import Navbar from "../component/Navbar";
 import heroImg from "../assets/my_pic.png";
 import logo from "../assets/tutor_bridge_logo.png";
-import "../App.css";
+import "./LandingPage.css";
 
 const steps = [
   {
