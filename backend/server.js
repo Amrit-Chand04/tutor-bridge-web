@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const tuitionRequestRoutes = require("./routes/tuitionRequestRoutes");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/tuition-requests", tuitionRequestRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
