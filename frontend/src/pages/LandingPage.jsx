@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import heroImg from "../assets/my_pic.png";
 import logo from "../assets/tutor_bridge_logo.png";
@@ -96,6 +98,17 @@ const aboutFeatures = [
 ];
 
 function LandingPage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.replace("#", "");
+    const timer = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [location]);
+
   return (
     <div>
       <Navbar />
@@ -114,12 +127,12 @@ function LandingPage() {
             Find trusted tutors and tuition opportunities without brokers,
             hidden fees, or unnecessary commissions.
           </p>
-          <button type="button" className="btn btn-primary btn-lg">
+          <Link to="/register" className="btn btn-primary btn-lg">
             Get Started
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-          </button>
+          </Link>
         </div>
 
         <div className="hero-image">

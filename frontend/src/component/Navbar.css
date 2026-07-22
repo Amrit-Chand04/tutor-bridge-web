@@ -25,15 +25,30 @@
 }
 .navbar-links {
   display: flex;
-  gap: 32px;
+  gap: 16px;
 }
-.navbar-links a {
-  color: var(--text-h);
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   font-size: 15px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
 }
-.navbar-links a:hover {
-  color: #3b5bdb;
+.nav-pill:hover {
+  opacity: 0.85;
+}
+.nav-pill-tan {
+  background: #ac7f5e;
+  border-color: #8f6849;
+  color: #fdfbf8;
+}
+.nav-pill-green {
+  background: #34c759;
+  border-color: #299c46;
+  color: #ffffff;
 }
 .navbar-actions {
   display: flex;
