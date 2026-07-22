@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/tutor_bridge_logo.png";
 import "./DashboardNavbar.css";
+
+const MENU_ITEMS = [
+  { icon: "👤", label: "Update Profile" },
+  { icon: "🔒", label: "Change Password" },
+  { icon: "📅", label: "My Booking" },
+  { icon: "🎓", label: "My Tutor" },
+];
 
 const AVATAR_COLORS = ["#5b4fe8", "#2f9e44", "#e2574c", "#0891b2", "#d97706"];
 
@@ -24,14 +31,38 @@ function DashboardNavbar({ user, active = "dashboard" }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const menuRef = useRef(null);
 
-  const notReady = () => toast("Coming soon");
+  const notReady = () => {
+    setMenuOpen(false);
+    toast("Coming soon");
+  };
 
   const confirmLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
   };
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    const handleEscape = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [menuOpen]);
 
   const initials = getInitials(user?.full_name);
   const avatarColor = getAvatarColor(user?.full_name || "");
@@ -65,8 +96,13 @@ function DashboardNavbar({ user, active = "dashboard" }) {
           </svg>
         </button>
 
-        <div className="profile-menu">
-          <button className="profile-trigger" onClick={() => setMenuOpen((v) => !v)}>
+        <div className="profile-menu" ref={menuRef}>
+          <button
+            className="profile-trigger"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+          >
             <span className="avatar" style={{ background: avatarColor }}>
               {initials}
             </span>
@@ -74,13 +110,35 @@ function DashboardNavbar({ user, active = "dashboard" }) {
           </button>
 
           {menuOpen && (
-            <div className="profile-dropdown">
+            <div className="profile-dropdown" role="menu">
+              <div className="profile-dropdown-header">
+                <span className="avatar avatar-lg" style={{ background: avatarColor }}>
+                  {initials}
+                </span>
+                <div className="profile-dropdown-info">
+                  <p className="profile-dropdown-name">{user?.full_name || "User"}</p>
+                  <p className="profile-dropdown-email">{user?.email}</p>
+                </div>
+              </div>
+
+              <div className="profile-dropdown-divider" />
+
+              {MENU_ITEMS.map((item) => (
+                <button key={item.label} role="menuitem" className="dropdown-item" onClick={notReady}>
+                  <span className="dropdown-item-icon">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
+
               <button
+                role="menuitem"
+                className="dropdown-item dropdown-item-danger"
                 onClick={() => {
                   setMenuOpen(false);
                   setShowLogoutConfirm(true);
                 }}
               >
+                <span className="dropdown-item-icon">🚪</span>
                 Logout
               </button>
             </div>

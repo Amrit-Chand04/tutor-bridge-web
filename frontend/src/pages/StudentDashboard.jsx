@@ -61,11 +61,12 @@ function StudentDashboard() {
               </button>
               <button className="btn-support" onClick={notReady}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7" />
-                  <path d="M12 17h.01" />
+                  <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
+                  <rect x="3" y="13" width="4" height="6" rx="2" />
+                  <rect x="17" y="13" width="4" height="6" rx="2" />
+                  <path d="M20 19v1a3 3 0 0 1-3 3h-3" />
                 </svg>
-                Support
+                Create Support
               </button>
             </div>
           </div>
