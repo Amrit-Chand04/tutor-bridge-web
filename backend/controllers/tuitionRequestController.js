@@ -1,6 +1,7 @@
 const { createTuitionRequest } = require("../models/tuitionRequestModel");
 
 const ALLOWED_GENDERS = ["male", "female", "any"];
+const CONTACT_NUMBER_REGEX = /^\d+$/;
 
 const createRequest = async (req, res) => {
   try {
@@ -15,9 +16,9 @@ const createRequest = async (req, res) => {
       description,
     } = req.body;
 
-    if (!subject || !location || !classLevel || !budget || !contactNumber) {
+    if (!subject || !location || !classLevel || !budget || !contactNumber || !description) {
       return res.status(400).json({
-        message: "Subject, location, class level, budget, and contact number are required",
+        message: "Subject, location, class level, budget, contact number, and description are required",
       });
     }
 
@@ -30,6 +31,12 @@ const createRequest = async (req, res) => {
     if (isNaN(budget) || Number(budget) < 0) {
       return res.status(400).json({
         message: "Budget must be a valid positive number",
+      });
+    }
+
+    if (!CONTACT_NUMBER_REGEX.test(contactNumber)) {
+      return res.status(400).json({
+        message: "Contact number must contain digits only",
       });
     }
 

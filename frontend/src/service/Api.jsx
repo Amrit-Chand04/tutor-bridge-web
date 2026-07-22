@@ -35,3 +35,7 @@ export const resetPassword = (data) => {
 export const changePassword = (data) => {
   return Api.post("/api/users/change-password", data);
 };
+
+export const createTuitionRequest = (data) => {
+  return Api.post("/api/tuition-requests", data);
+};

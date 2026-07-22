@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import DashboardNavbar from "../component/DashboardNavbar";
+import CreateTuitionRequestModal from "../component/CreateTuitionRequestModal";
 import heroImg from "../assets/my_pic.png";
 import "./StudentDashboard.css";
 
@@ -15,6 +16,7 @@ const getGreeting = () => {
 function StudentDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [showCreateRequest, setShowCreateRequest] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -53,7 +55,7 @@ function StudentDashboard() {
             </p>
 
             <div className="dash-card-actions">
-              <button className="btn-create" onClick={notReady}>
+              <button className="btn-create" onClick={() => setShowCreateRequest(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M12 5v14M5 12h14" />
                 </svg>
@@ -76,6 +78,10 @@ function StudentDashboard() {
           <img src={heroImg} alt="" />
         </div>
       </section>
+
+      {showCreateRequest && (
+        <CreateTuitionRequestModal onClose={() => setShowCreateRequest(false)} />
+      )}
     </div>
   );
 }
