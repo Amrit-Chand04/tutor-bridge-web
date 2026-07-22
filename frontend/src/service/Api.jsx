@@ -40,6 +40,10 @@ export const createTuitionRequest = (data) => {
   return Api.post("/api/tuition-requests", data);
 };
 
+export const getOpenTuitionRequests = () => {
+  return Api.get("/api/tuition-requests");
+};
+
 export const getAllUsers = () => {
   return Api.get("/api/users");
 };

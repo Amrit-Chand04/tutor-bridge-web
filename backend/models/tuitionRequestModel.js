@@ -32,6 +32,18 @@ const createTuitionRequest = async (userId, data) => {
   return result.rows[0];
 };
 
+const getOpenTuitionRequests = async () => {
+  const result = await pool.query(
+    `SELECT tr.*, u.full_name AS posted_by
+     FROM tuition_requests tr
+     JOIN users u ON u.user_id = tr.user_id
+     WHERE tr.status = 'open'
+     ORDER BY tr.created_at DESC`,
+  );
+  return result.rows;
+};
+
 module.exports = {
   createTuitionRequest,
+  getOpenTuitionRequests,
 };

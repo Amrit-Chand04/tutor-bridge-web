@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import TutorNavbar from "../component/TutorNavbar";
 import { getDashboardPath } from "../utils/roleRoutes";
@@ -59,13 +59,13 @@ function TutorDashboard() {
             </p>
 
             <div className="dash-card-actions">
-              <button className="btn-create" onClick={notReady}>
+              <Link to="/tutor/browse-tuitions" className="btn-create">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <circle cx="11" cy="11" r="7" />
                   <path d="M21 21l-4.3-4.3" />
                 </svg>
                 View Available Tuitions
-              </button>
+              </Link>
               <button className="btn-support" onClick={notReady}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
