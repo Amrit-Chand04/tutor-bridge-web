@@ -67,23 +67,23 @@ function CreateTuitionRequestModal({ onClose }) {
         <form onSubmit={handleSubmit}>
           <div className="ctr-grid">
             <div className="ctr-field">
-              <label>Subject *</label>
+              <label>Subject</label>
               <input type="text" placeholder="e.g. Mathematics" value={form.subject} onChange={update("subject")} />
             </div>
             <div className="ctr-field">
-              <label>Location *</label>
+              <label>Location</label>
               <input type="text" placeholder="e.g. Kathmandu" value={form.location} onChange={update("location")} />
             </div>
             <div className="ctr-field">
-              <label>Class Level *</label>
+              <label>Class Level</label>
               <input type="text" placeholder="e.g. Grade 10" value={form.classLevel} onChange={update("classLevel")} />
             </div>
             <div className="ctr-field">
-              <label>Budget (per month) *</label>
+              <label>Budget (per month)</label>
               <input type="number" min="0" placeholder="e.g. 10000" value={form.budget} onChange={update("budget")} />
             </div>
             <div className="ctr-field">
-              <label>Contact Number *</label>
+              <label>Contact Number</label>
               <input
                 type="tel"
                 inputMode="numeric"
