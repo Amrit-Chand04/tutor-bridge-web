@@ -87,3 +87,19 @@ export const saveTutorProfile = (formData) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const getAllTutorProfiles = () => {
+  return Api.get("/api/tutor-profile");
+};
+
+export const approveTutorProfile = (id) => {
+  return Api.put(`/api/tutor-profile/${id}/approve`);
+};
+
+export const rejectTutorProfile = (id, reason) => {
+  return Api.put(`/api/tutor-profile/${id}/reject`, { reason });
+};
+
+export const deleteTutorProfile = (id) => {
+  return Api.delete(`/api/tutor-profile/${id}`);
+};

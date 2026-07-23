@@ -31,7 +31,47 @@ const upsertProfile = async (userId, data) => {
   return result.rows[0];
 };
 
+const getAllProfiles = async () => {
+  const result = await pool.query(
+    `SELECT tp.*, u.full_name AS tutor_name, u.email AS tutor_email
+     FROM tutor_profiles tp
+     JOIN users u ON u.user_id = tp.user_id
+     ORDER BY tp.updated_at DESC`,
+  );
+  return result.rows;
+};
+
+const approveProfile = async (profileId) => {
+  const result = await pool.query(
+    `UPDATE tutor_profiles SET verification_status = 'verified', rejection_reason = NULL
+     WHERE profile_id = $1 RETURNING *`,
+    [profileId],
+  );
+  return result.rows[0];
+};
+
+const rejectProfile = async (profileId, reason) => {
+  const result = await pool.query(
+    `UPDATE tutor_profiles SET verification_status = 'rejected', rejection_reason = $2
+     WHERE profile_id = $1 RETURNING *`,
+    [profileId, reason],
+  );
+  return result.rows[0];
+};
+
+const deleteProfile = async (profileId) => {
+  const result = await pool.query(
+    "DELETE FROM tutor_profiles WHERE profile_id = $1 RETURNING *",
+    [profileId],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   getProfileByUserId,
   upsertProfile,
+  getAllProfiles,
+  approveProfile,
+  rejectProfile,
+  deleteProfile,
 };

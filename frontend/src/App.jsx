@@ -13,6 +13,7 @@ import SupportTickets from "./pages/SupportTickets";
 import AdminSupportTickets from "./pages/AdminSupportTickets";
 import SupportTicketDetail from "./pages/SupportTicketDetail";
 import TutorProfile from "./pages/TutorProfile";
+import AdminTutorProfiles from "./pages/AdminTutorProfiles";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/support" element={<SupportTickets />} />
         <Route path="/support/:id" element={<SupportTicketDetail />} />
         <Route path="/admin/support-tickets" element={<AdminSupportTickets />} />
+        <Route path="/admin/tutor-profiles" element={<AdminTutorProfiles />} />
       </Routes>
     </BrowserRouter>
   );

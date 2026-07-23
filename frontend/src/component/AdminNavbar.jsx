@@ -6,10 +6,6 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import UpdateProfileModal from "./UpdateProfileModal";
 import "./DashboardNavbar.css";
 
-const MENU_ITEMS = [
-  { icon: "🎓", label: "Manage Tutor Profile" },
-];
-
 const AVATAR_COLORS = ["#5b4fe8", "#2f9e44", "#e2574c", "#0891b2", "#d97706"];
 
 const getInitials = (name = "") => {
@@ -26,7 +22,7 @@ const getAvatarColor = (name = "") => {
   return AVATAR_COLORS[hash];
 };
 
-function AdminNavbar({ user, active = "dashboard" }) {
+function AdminNavbar({ user, active = "dashboard", minimal = false }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -74,31 +70,35 @@ function AdminNavbar({ user, active = "dashboard" }) {
         <img src={logo} alt="Tutor Bridge" />
       </Link>
 
-      <div className="dash-navbar-links">
-        <Link
-          to="/admin-dashboard"
-          className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
-        >
-          Dashboard
-        </Link>
-        <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
-          Manage Booking
-        </a>
-        <Link
-          to="/admin/manage-users"
-          className={`nav-pill nav-pill-tan ${active === "manage-users" ? "nav-pill-active" : ""}`}
-        >
-          Manage User
-        </Link>
-      </div>
+      {!minimal && (
+        <div className="dash-navbar-links">
+          <Link
+            to="/admin-dashboard"
+            className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
+          >
+            Dashboard
+          </Link>
+          <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
+            Manage Booking
+          </a>
+          <Link
+            to="/admin/manage-users"
+            className={`nav-pill nav-pill-tan ${active === "manage-users" ? "nav-pill-active" : ""}`}
+          >
+            Manage User
+          </Link>
+        </div>
+      )}
 
       <div className="dash-navbar-actions">
-        <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
-            <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
-          </svg>
-        </button>
+        {!minimal && (
+          <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
+              <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
+            </svg>
+          </button>
+        )}
 
         <div className="profile-menu" ref={menuRef}>
           <button
@@ -151,12 +151,17 @@ function AdminNavbar({ user, active = "dashboard" }) {
                 Change Password
               </button>
 
-              {MENU_ITEMS.map((item) => (
-                <button key={item.label} role="menuitem" className="dropdown-item" onClick={notReady}>
-                  <span className="dropdown-item-icon">{item.icon}</span>
-                  {item.label}
-                </button>
-              ))}
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/admin/tutor-profiles");
+                }}
+              >
+                <span className="dropdown-item-icon">🎓</span>
+                Manage Tutor Profile
+              </button>
 
               <button
                 role="menuitem"
