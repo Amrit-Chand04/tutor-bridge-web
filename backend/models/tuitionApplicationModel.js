@@ -32,6 +32,20 @@ const getApplicationsForRequest = async (requestId) => {
   return result.rows;
 };
 
+const getApplicationsForTutor = async (tutorId) => {
+  const result = await pool.query(
+    `SELECT ta.application_id, ta.status AS application_status, ta.created_at AS applied_at,
+       tr.*, u.full_name AS posted_by
+     FROM tuition_applications ta
+     JOIN tuition_requests tr ON tr.request_id = ta.request_id
+     JOIN users u ON u.user_id = tr.user_id
+     WHERE ta.tutor_id = $1
+     ORDER BY ta.created_at DESC`,
+    [tutorId],
+  );
+  return result.rows;
+};
+
 const getApplicationById = async (applicationId) => {
   const result = await pool.query(
     "SELECT * FROM tuition_applications WHERE application_id = $1",
@@ -70,6 +84,7 @@ module.exports = {
   createApplication,
   getApplicationByRequestAndTutor,
   getApplicationsForRequest,
+  getApplicationsForTutor,
   getApplicationById,
   acceptApplication,
   rejectApplication,

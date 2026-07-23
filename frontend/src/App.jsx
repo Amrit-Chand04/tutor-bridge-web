@@ -15,6 +15,7 @@ import SupportTicketDetail from "./pages/SupportTicketDetail";
 import TutorProfile from "./pages/TutorProfile";
 import AdminTutorProfiles from "./pages/AdminTutorProfiles";
 import MyTuitionRequests from "./pages/MyTuitionRequests";
+import MyApplications from "./pages/MyApplications";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin/support-tickets" element={<AdminSupportTickets />} />
         <Route path="/admin/tutor-profiles" element={<AdminTutorProfiles />} />
         <Route path="/student/my-requests" element={<MyTuitionRequests />} />
+        <Route path="/tutor/my-applications" element={<MyApplications />} />
       </Routes>
     </BrowserRouter>
   );

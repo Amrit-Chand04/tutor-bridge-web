@@ -82,9 +82,12 @@ function TutorNavbar({ user, active = "dashboard", minimal = false }) {
           >
             Dashboard
           </Link>
-          <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
+          <Link
+            to="/tutor/my-applications"
+            className={`nav-pill nav-pill-green ${active === "my-applications" ? "nav-pill-active" : ""}`}
+          >
             My Application
-          </a>
+          </Link>
           <Link
             to="/support"
             className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}

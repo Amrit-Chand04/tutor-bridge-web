@@ -2,6 +2,7 @@ const {
   createApplication,
   getApplicationByRequestAndTutor,
   getApplicationsForRequest,
+  getApplicationsForTutor,
   getApplicationById,
   acceptApplication,
   rejectApplication,
@@ -40,6 +41,18 @@ const applyToRequest = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Failed to submit application",
+      error: error.message,
+    });
+  }
+};
+
+const listMyApplications = async (req, res) => {
+  try {
+    const applications = await getApplicationsForTutor(req.user.user_id);
+    res.status(200).json({ applications });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch your applications",
       error: error.message,
     });
   }
@@ -123,6 +136,7 @@ const rejectTutorApplication = async (req, res) => {
 
 module.exports = {
   applyToRequest,
+  listMyApplications,
   listApplicationsForRequest,
   acceptTutorApplication,
   rejectTutorApplication,

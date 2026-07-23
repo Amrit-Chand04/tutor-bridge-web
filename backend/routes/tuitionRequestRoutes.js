@@ -3,6 +3,7 @@ const router = express.Router();
 const { createRequest, getRequests, getMyRequests } = require("../controllers/tuitionRequestController");
 const {
   applyToRequest,
+  listMyApplications,
   listApplicationsForRequest,
   acceptTutorApplication,
   rejectTutorApplication,
@@ -12,6 +13,7 @@ const { protect, restrictTo } = require("../middleware/authMiddleware");
 router.post("/", protect, restrictTo("student"), createRequest);
 router.get("/", protect, restrictTo("tutor"), getRequests);
 router.get("/my", protect, restrictTo("student"), getMyRequests);
+router.get("/my-applications", protect, restrictTo("tutor"), listMyApplications);
 
 router.post("/:id/apply", protect, restrictTo("tutor"), applyToRequest);
 router.get("/:id/applications", protect, restrictTo("student"), listApplicationsForRequest);

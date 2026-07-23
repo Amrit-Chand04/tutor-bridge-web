@@ -52,6 +52,10 @@ export const applyToTuitionRequest = (id) => {
   return Api.post(`/api/tuition-requests/${id}/apply`);
 };
 
+export const getMyApplications = () => {
+  return Api.get("/api/tuition-requests/my-applications");
+};
+
 export const getApplicationsForRequest = (id) => {
   return Api.get(`/api/tuition-requests/${id}/applications`);
 };
