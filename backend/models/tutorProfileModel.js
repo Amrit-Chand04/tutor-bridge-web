@@ -24,6 +24,14 @@ const upsertProfile = async (userId, data) => {
        years_experience = EXCLUDED.years_experience,
        description = EXCLUDED.description,
        skills = EXCLUDED.skills,
+       verification_status = CASE
+         WHEN EXCLUDED.cv_url IS NOT NULL THEN 'pending'
+         ELSE tutor_profiles.verification_status
+       END,
+       rejection_reason = CASE
+         WHEN EXCLUDED.cv_url IS NOT NULL THEN NULL
+         ELSE tutor_profiles.rejection_reason
+       END,
        updated_at = NOW()
      RETURNING *`,
     [userId, cvUrl || null, degree, institution, passingYear, yearsExperience, description, skills],

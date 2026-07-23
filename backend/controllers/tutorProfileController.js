@@ -57,7 +57,9 @@ const saveMyProfile = async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Tutor profile saved successfully",
+      message: req.file
+        ? "Request sent for approval"
+        : "Profile updated successfully",
       profile,
     });
   } catch (error) {

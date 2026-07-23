@@ -199,28 +199,30 @@ function AdminTutorProfiles() {
               </div>
             )}
 
-            <div className="atp-actions">
-              <button
-                className="atp-approve-btn"
-                onClick={() => handleApprove(viewTarget)}
-                disabled={busyId === viewTarget.profile_id || viewTarget.verification_status !== "pending"}
-              >
-                {busyId === viewTarget.profile_id ? (
-                  <>
-                    <span className="spinner" /> Approving...
-                  </>
-                ) : (
-                  "Approve"
-                )}
-              </button>
-              <button
-                className="atp-reject-btn"
-                onClick={() => setRejectTarget(viewTarget)}
-                disabled={busyId === viewTarget.profile_id || viewTarget.verification_status !== "pending"}
-              >
-                Reject
-              </button>
-            </div>
+            {viewTarget.verification_status === "pending" && (
+              <div className="atp-actions">
+                <button
+                  className="atp-approve-btn"
+                  onClick={() => handleApprove(viewTarget)}
+                  disabled={busyId === viewTarget.profile_id}
+                >
+                  {busyId === viewTarget.profile_id ? (
+                    <>
+                      <span className="spinner" /> Approving...
+                    </>
+                  ) : (
+                    "Approve"
+                  )}
+                </button>
+                <button
+                  className="atp-reject-btn"
+                  onClick={() => setRejectTarget(viewTarget)}
+                  disabled={busyId === viewTarget.profile_id}
+                >
+                  Reject
+                </button>
+              </div>
+            )}
 
             <div className="modal-actions">
               <button className="modal-btn-cancel" onClick={() => setViewTarget(null)}>
