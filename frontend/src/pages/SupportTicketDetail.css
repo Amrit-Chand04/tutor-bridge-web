@@ -1,0 +1,251 @@
+.td-page {
+  padding: 40px 48px 64px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.td-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.td-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 20px 48px rgba(20, 12, 60, 0.06);
+}
+
+.td-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--text-h);
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.td-back svg {
+  width: 16px;
+  height: 16px;
+}
+.td-back:hover {
+  background: #f7f6fb;
+  border-color: #6a5cf5;
+  color: #5b4fe8;
+}
+
+.td-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.td-ticket-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5b4fe8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 6px;
+}
+.td-ticket-subject {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: var(--text-h);
+}
+
+.td-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.td-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.td-status-open {
+  background: #e6f4ea;
+  color: #2f9e44;
+}
+.td-status-resolved {
+  background: #ece9fe;
+  color: #5b4fe8;
+}
+
+.td-section {
+  margin-bottom: 24px;
+}
+.td-section:last-child {
+  margin-bottom: 0;
+}
+
+.td-section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-bottom: 12px;
+}
+.td-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.td-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.td-icon-problem {
+  background: #fdecea;
+  color: #e2574c;
+}
+.td-icon-response {
+  background: #ece9fe;
+  color: #5b4fe8;
+}
+.td-icon-reply {
+  background: #e6f4ea;
+  color: #2f9e44;
+}
+
+.td-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-h);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.td-response-box {
+  background: #f7f6fb;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.td-response-time {
+  display: block;
+  font-size: 12px;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.td-waiting-box {
+  background: #fafafa;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.td-waiting {
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--text);
+  margin: 0;
+}
+
+.td-reply-section {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.td-reply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.td-reply-form textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-h);
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.td-reply-form textarea:focus {
+  outline: none;
+  border-color: #6a5cf5;
+  box-shadow: 0 0 0 4px rgba(91, 79, 232, 0.15);
+}
+
+.td-send-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: flex-start;
+  border: none;
+  background: #5b4fe8;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 12px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(91, 79, 232, 0.25);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.td-send-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.td-send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .td-page {
+    padding: 24px 20px 48px;
+  }
+  .td-card {
+    padding: 24px;
+  }
+  .td-card-header {
+    flex-direction: column;
+  }
+}

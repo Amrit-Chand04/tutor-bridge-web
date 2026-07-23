@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import AdminNavbar from "../component/AdminNavbar";
 import { getDashboardPath } from "../utils/roleRoutes";
 import heroImg from "../assets/my_pic.png";
@@ -34,8 +33,6 @@ function AdminDashboard() {
 
   if (!user) return null;
 
-  const notReady = () => toast("Coming soon");
-
   return (
     <div>
       <AdminNavbar user={user} active="dashboard" />
@@ -59,13 +56,13 @@ function AdminDashboard() {
             </p>
 
             <div className="dash-card-actions">
-              <button className="btn-create" onClick={notReady}>
+              <Link to="/admin/support-tickets" className="btn-create">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z" />
                   <path d="M13 6v12" strokeDasharray="2 2" />
                 </svg>
                 Support Tickets
-              </button>
+              </Link>
             </div>
           </div>
         </div>

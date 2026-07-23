@@ -9,6 +9,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ManageUsers from "./pages/ManageUsers";
 import TutorDashboard from "./pages/TutorDashboard";
 import BrowseTuitions from "./pages/BrowseTuitions";
+import SupportTickets from "./pages/SupportTickets";
+import AdminSupportTickets from "./pages/AdminSupportTickets";
+import SupportTicketDetail from "./pages/SupportTicketDetail";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/admin/manage-users" element={<ManageUsers />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/tutor/browse-tuitions" element={<BrowseTuitions />} />
+        <Route path="/support" element={<SupportTickets />} />
+        <Route path="/support/:id" element={<SupportTicketDetail />} />
+        <Route path="/admin/support-tickets" element={<AdminSupportTickets />} />
       </Routes>
     </BrowserRouter>
   );

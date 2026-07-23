@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import TutorNavbar from "../component/TutorNavbar";
+import CreateSupportModal from "../component/CreateSupportModal";
 import { getDashboardPath } from "../utils/roleRoutes";
 import heroImg from "../assets/my_pic.png";
 import "./StudentDashboard.css";
@@ -16,6 +16,7 @@ const getGreeting = () => {
 function TutorDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [showCreateSupport, setShowCreateSupport] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,8 +34,6 @@ function TutorDashboard() {
   }, [navigate]);
 
   if (!user) return null;
-
-  const notReady = () => toast("Coming soon");
 
   return (
     <div>
@@ -66,7 +65,7 @@ function TutorDashboard() {
                 </svg>
                 View Available Tuitions
               </Link>
-              <button className="btn-support" onClick={notReady}>
+              <button className="btn-support" onClick={() => setShowCreateSupport(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
                   <rect x="3" y="13" width="4" height="6" rx="2" />
@@ -83,6 +82,10 @@ function TutorDashboard() {
           <img src={heroImg} alt="" />
         </div>
       </section>
+
+      {showCreateSupport && (
+        <CreateSupportModal onClose={() => setShowCreateSupport(false)} />
+      )}
     </div>
   );
 }

@@ -1,0 +1,116 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import DashboardNavbar from "../component/DashboardNavbar";
+import TutorNavbar from "../component/TutorNavbar";
+import { getMySupportTickets } from "../service/Api";
+import { getDashboardPath } from "../utils/roleRoutes";
+import "./SupportTickets.css";
+
+const formatDate = (dateString) => {
+  const d = new Date(dateString);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+function SupportTickets() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    if (!token || !storedUser) {
+      navigate("/login");
+      return;
+    }
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser.role !== "student" && parsedUser.role !== "tutor") {
+      navigate(getDashboardPath(parsedUser.role));
+      return;
+    }
+    setUser(parsedUser);
+    fetchTickets();
+  }, [navigate]);
+
+  const fetchTickets = async () => {
+    try {
+      setLoading(true);
+      const response = await getMySupportTickets();
+      setTickets(response.data.tickets);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to load support tickets");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!user) return null;
+
+  const Navbar = user.role === "tutor" ? TutorNavbar : DashboardNavbar;
+
+  return (
+    <div>
+      <Navbar user={user} active="support" />
+
+      <section className="st-page">
+        <div className="st-header">
+          <h1 className="st-heading">My Support Tickets</h1>
+          {!loading && tickets.length > 0 && (
+            <span className="st-count">
+              {tickets.length} {tickets.length === 1 ? "ticket" : "tickets"}
+            </span>
+          )}
+        </div>
+
+        <div className="st-table-wrap">
+          {loading ? (
+            <p className="st-empty">Loading support tickets...</p>
+          ) : tickets.length === 0 ? (
+            <p className="st-empty">You haven't raised any support tickets yet.</p>
+          ) : (
+            <table className="st-table">
+              <thead>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Created Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tickets.map((t) => (
+                  <tr key={t.ticket_id}>
+                    <td>{t.ticket_id}</td>
+                    <td>{t.subject}</td>
+                    <td>
+                      <span className={`st-status-badge st-status-${t.status}`}>
+                        {t.status}
+                      </span>
+                    </td>
+                    <td>{formatDate(t.created_at)}</td>
+                    <td>
+                      <button
+                        className="st-action-view"
+                        onClick={() => navigate(`/support/${t.ticket_id}`)}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default SupportTickets;

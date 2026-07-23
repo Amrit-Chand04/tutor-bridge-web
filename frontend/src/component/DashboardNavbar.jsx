@@ -85,9 +85,12 @@ function DashboardNavbar({ user, active = "dashboard" }) {
         <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
           My Requests
         </a>
-        <a href="#" className="nav-pill nav-pill-tan" onClick={(e) => { e.preventDefault(); notReady(); }}>
+        <Link
+          to="/support"
+          className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}
+        >
           Support
-        </a>
+        </Link>
       </div>
 
       <div className="dash-navbar-actions">

@@ -5,6 +5,7 @@ const cors = require("cors");
 const pool = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const tuitionRequestRoutes = require("./routes/tuitionRequestRoutes");
+const supportTicketRoutes = require("./routes/supportTicketRoutes");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/tuition-requests", tuitionRequestRoutes);
+app.use("/api/support-tickets", supportTicketRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

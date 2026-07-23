@@ -1,0 +1,118 @@
+.st-page {
+  padding: 32px 48px 64px;
+}
+
+.st-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.st-heading {
+  font-size: 32px;
+  margin: 0;
+  color: var(--text-h);
+}
+
+.st-count {
+  flex-shrink: 0;
+  background: #ece9fe;
+  color: #5b4fe8;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.st-table-wrap {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.st-empty {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.st-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.st-table th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text);
+  background: #f7f6fb;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.st-table td {
+  padding: 14px 20px;
+  font-size: 14.5px;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.st-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.st-table tbody tr:hover {
+  background: #fafaff;
+}
+
+.st-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.st-status-open {
+  background: #e6f4ea;
+  color: #2f9e44;
+}
+.st-status-resolved {
+  background: #ece9fe;
+  color: #5b4fe8;
+}
+
+.st-action-view {
+  border: none;
+  background: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #3b5bdb;
+  transition: background-color 0.15s ease;
+}
+.st-action-view:hover {
+  background: #eaf1ff;
+}
+
+@media (max-width: 768px) {
+  .st-page {
+    padding: 24px 20px 48px;
+  }
+  .st-table-wrap {
+    overflow-x: auto;
+  }
+  .st-table {
+    min-width: 600px;
+  }
+}

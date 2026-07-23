@@ -57,3 +57,23 @@ export const updateProfile = (formData) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const createSupportTicket = (data) => {
+  return Api.post("/api/support-tickets", data);
+};
+
+export const getMySupportTickets = () => {
+  return Api.get("/api/support-tickets/my");
+};
+
+export const getAllSupportTickets = () => {
+  return Api.get("/api/support-tickets");
+};
+
+export const getSupportTicketDetail = (id) => {
+  return Api.get(`/api/support-tickets/${id}`);
+};
+
+export const addTicketMessage = (id, message) => {
+  return Api.post(`/api/support-tickets/${id}/messages`, { message });
+};

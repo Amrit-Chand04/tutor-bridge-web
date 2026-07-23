@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import DashboardNavbar from "../component/DashboardNavbar";
 import CreateTuitionRequestModal from "../component/CreateTuitionRequestModal";
+import CreateSupportModal from "../component/CreateSupportModal";
 import { getDashboardPath } from "../utils/roleRoutes";
 import heroImg from "../assets/my_pic.png";
 import "./StudentDashboard.css";
@@ -18,6 +18,7 @@ function StudentDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showCreateRequest, setShowCreateRequest] = useState(false);
+  const [showCreateSupport, setShowCreateSupport] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -35,8 +36,6 @@ function StudentDashboard() {
   }, [navigate]);
 
   if (!user) return null;
-
-  const notReady = () => toast("Coming soon");
 
   return (
     <div>
@@ -67,7 +66,7 @@ function StudentDashboard() {
                 </svg>
                 Create Tuition Request
               </button>
-              <button className="btn-support" onClick={notReady}>
+              <button className="btn-support" onClick={() => setShowCreateSupport(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
                   <rect x="3" y="13" width="4" height="6" rx="2" />
@@ -87,6 +86,10 @@ function StudentDashboard() {
 
       {showCreateRequest && (
         <CreateTuitionRequestModal onClose={() => setShowCreateRequest(false)} />
+      )}
+
+      {showCreateSupport && (
+        <CreateSupportModal onClose={() => setShowCreateSupport(false)} />
       )}
     </div>
   );
