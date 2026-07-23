@@ -1,5 +1,6 @@
 const {
   getBookingsByStudent,
+  getBookingsByTutor,
   getAllBookings,
   getBookingById,
   acceptBooking,
@@ -9,6 +10,18 @@ const {
 const getMyBookings = async (req, res) => {
   try {
     const bookings = await getBookingsByStudent(req.user.user_id);
+    res.status(200).json({ bookings });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch your bookings",
+      error: error.message,
+    });
+  }
+};
+
+const getMyTutorBookings = async (req, res) => {
+  try {
+    const bookings = await getBookingsByTutor(req.user.user_id);
     res.status(200).json({ bookings });
   } catch (error) {
     res.status(500).json({
@@ -81,4 +94,10 @@ const rejectBookingAdmin = async (req, res) => {
   }
 };
 
-module.exports = { getMyBookings, getAllBookingsAdmin, acceptBookingAdmin, rejectBookingAdmin };
+module.exports = {
+  getMyBookings,
+  getMyTutorBookings,
+  getAllBookingsAdmin,
+  acceptBookingAdmin,
+  rejectBookingAdmin,
+};

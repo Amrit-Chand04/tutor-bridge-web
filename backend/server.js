@@ -9,6 +9,8 @@ const supportTicketRoutes = require("./routes/supportTicketRoutes");
 const tutorProfileRoutes = require("./routes/tutorProfileRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const chatRoutes = require("./routes/chatRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use("/api/support-tickets", supportTicketRoutes);
 app.use("/api/tutor-profile", tutorProfileRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/chats", chatRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

@@ -23,6 +23,19 @@ const getBookingsByStudent = async (studentId) => {
   return result.rows;
 };
 
+const getBookingsByTutor = async (tutorId) => {
+  const result = await pool.query(
+    `SELECT b.*, tr.subject, tr.class_level, tr.location, u.full_name AS student_name, u.email AS student_email
+     FROM bookings b
+     JOIN tuition_requests tr ON tr.request_id = b.request_id
+     JOIN users u ON u.user_id = b.student_id
+     WHERE b.tutor_id = $1
+     ORDER BY b.booking_date DESC`,
+    [tutorId],
+  );
+  return result.rows;
+};
+
 const getAllBookings = async () => {
   const result = await pool.query(
     `SELECT b.*, tr.subject, tr.class_level, tr.location,
@@ -35,6 +48,18 @@ const getAllBookings = async () => {
      ORDER BY b.booking_date DESC`,
   );
   return result.rows;
+};
+
+const getBookedBookingBetween = async (userId1, userId2) => {
+  const result = await pool.query(
+    `SELECT * FROM bookings
+     WHERE status = 'booked'
+       AND ((student_id = $1 AND tutor_id = $2) OR (student_id = $2 AND tutor_id = $1))
+     ORDER BY booking_date DESC
+     LIMIT 1`,
+    [userId1, userId2],
+  );
+  return result.rows[0];
 };
 
 const getBookingById = async (bookingId) => {
@@ -63,7 +88,9 @@ const rejectBooking = async (bookingId, reason) => {
 module.exports = {
   createBooking,
   getBookingsByStudent,
+  getBookingsByTutor,
   getAllBookings,
+  getBookedBookingBetween,
   getBookingById,
   acceptBooking,
   rejectBooking,

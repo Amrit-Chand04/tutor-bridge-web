@@ -151,3 +151,27 @@ export const acceptBooking = (id) => {
 export const rejectBooking = (id, reason) => {
   return Api.put(`/api/bookings/${id}/reject`, { reason });
 };
+
+export const getMyTutorBookings = () => {
+  return Api.get("/api/bookings/tutor/my");
+};
+
+export const getChatMessages = (otherUserId) => {
+  return Api.get(`/api/chats/with/${otherUserId}`);
+};
+
+export const sendChatMessage = (otherUserId, message) => {
+  return Api.post(`/api/chats/with/${otherUserId}`, { message });
+};
+
+export const getReview = (otherUserId) => {
+  return Api.get(`/api/reviews/with/${otherUserId}`);
+};
+
+export const saveReview = (tutorId, rating, reviewText) => {
+  return Api.put(`/api/reviews/${tutorId}`, { rating, reviewText });
+};
+
+export const deleteReview = (tutorId) => {
+  return Api.delete(`/api/reviews/${tutorId}`);
+};

@@ -1,0 +1,133 @@
+.mt-page {
+  padding: 40px 24px 64px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.mt-heading {
+  font-size: 32px;
+  margin: 0 0 24px;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.mt-empty {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.mt-empty-box {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 56px 32px;
+  text-align: center;
+}
+.mt-empty-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+}
+.mt-empty-box h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  color: var(--text-h);
+}
+.mt-empty-box p {
+  margin: 0 auto;
+  max-width: 380px;
+  font-size: 14.5px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.mt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mt-card {
+  background: #fff;
+  border: 2px solid #5b4fe8;
+  border-radius: 16px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(20, 20, 43, 0.05);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.mt-card:hover {
+  box-shadow: 0 4px 14px rgba(20, 20, 43, 0.08);
+  transform: translateY(-1px);
+}
+
+.mt-card-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.mt-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mt-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0 0 4px;
+}
+.mt-email {
+  font-size: 14.5px;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+.mt-subject-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.mt-subject {
+  display: inline-block;
+  background: #f7f6fb;
+  color: #5b4fe8;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin: 0;
+}
+
+.mt-message-btn {
+  flex-shrink: 0;
+  border: none;
+  background: #5b4fe8;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 11px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.mt-message-btn:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .mt-page {
+    padding: 24px 20px 48px;
+  }
+  .mt-card-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mt-message-btn {
+    width: 100%;
+  }
+}

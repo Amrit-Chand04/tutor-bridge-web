@@ -19,6 +19,8 @@ import MyApplications from "./pages/MyApplications";
 import PaymentCallback from "./pages/PaymentCallback";
 import MyBookings from "./pages/MyBookings";
 import AdminManageBookings from "./pages/AdminManageBookings";
+import MyTutor from "./pages/MyTutor";
+import MyStudent from "./pages/MyStudent";
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
         <Route path="/student/payment/callback" element={<PaymentCallback />} />
         <Route path="/student/my-bookings" element={<MyBookings />} />
         <Route path="/admin/manage-bookings" element={<AdminManageBookings />} />
+        <Route path="/student/my-tutor" element={<MyTutor />} />
+        <Route path="/tutor/my-student" element={<MyStudent />} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,9 +6,6 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import UpdateProfileModal from "./UpdateProfileModal";
 import "./DashboardNavbar.css";
 
-const MENU_ITEMS = [
-  { icon: "🧑‍🎓", label: "My Student" },
-];
 
 const AVATAR_COLORS = ["#5b4fe8", "#2f9e44", "#e2574c", "#0891b2", "#d97706"];
 
@@ -170,12 +167,17 @@ function TutorNavbar({ user, active = "dashboard", minimal = false }) {
                 My Tutor Profile
               </button>
 
-              {MENU_ITEMS.map((item) => (
-                <button key={item.label} role="menuitem" className="dropdown-item" onClick={notReady}>
-                  <span className="dropdown-item-icon">{item.icon}</span>
-                  {item.label}
-                </button>
-              ))}
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/tutor/my-student");
+                }}
+              >
+                <span className="dropdown-item-icon">🧑‍🎓</span>
+                My Student
+              </button>
 
               <button
                 role="menuitem"
