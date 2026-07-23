@@ -1,16 +1,16 @@
 const cloudinary = require("../config/cloudinary");
 
-const uploadProfilePhoto = (fileBuffer) => {
+const uploadImage = (fileBuffer, folder) => {
   return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "tutor-bridge/profile-photos" },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
-      },
-    );
+    const stream = cloudinary.uploader.upload_stream({ folder }, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
     stream.end(fileBuffer);
   });
 };
 
-module.exports = { uploadProfilePhoto };
+const uploadProfilePhoto = (fileBuffer) => uploadImage(fileBuffer, "tutor-bridge/profile-photos");
+const uploadCvImage = (fileBuffer) => uploadImage(fileBuffer, "tutor-bridge/tutor-cvs");
+
+module.exports = { uploadProfilePhoto, uploadCvImage };

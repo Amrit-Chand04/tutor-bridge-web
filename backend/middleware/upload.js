@@ -11,8 +11,8 @@ const upload = multer({
   },
 });
 
-const uploadProfilePhoto = (req, res, next) => {
-  upload.single("profile_photo")(req, res, (error) => {
+const handleUpload = (fieldName) => (req, res, next) => {
+  upload.single(fieldName)(req, res, (error) => {
     if (error) {
       return res.status(400).json({ message: error.message });
     }
@@ -20,4 +20,7 @@ const uploadProfilePhoto = (req, res, next) => {
   });
 };
 
-module.exports = { uploadProfilePhoto };
+const uploadProfilePhoto = handleUpload("profile_photo");
+const uploadCv = handleUpload("cv");
+
+module.exports = { uploadProfilePhoto, uploadCv };

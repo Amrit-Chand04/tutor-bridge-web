@@ -77,3 +77,13 @@ export const getSupportTicketDetail = (id) => {
 export const addTicketMessage = (id, message) => {
   return Api.post(`/api/support-tickets/${id}/messages`, { message });
 };
+
+export const getMyTutorProfile = () => {
+  return Api.get("/api/tutor-profile/me");
+};
+
+export const saveTutorProfile = (formData) => {
+  return Api.put("/api/tutor-profile", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};

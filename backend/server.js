@@ -6,6 +6,7 @@ const pool = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const tuitionRequestRoutes = require("./routes/tuitionRequestRoutes");
 const supportTicketRoutes = require("./routes/supportTicketRoutes");
+const tutorProfileRoutes = require("./routes/tutorProfileRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/tuition-requests", tuitionRequestRoutes);
 app.use("/api/support-tickets", supportTicketRoutes);
+app.use("/api/tutor-profile", tutorProfileRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

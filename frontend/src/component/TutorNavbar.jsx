@@ -7,7 +7,6 @@ import UpdateProfileModal from "./UpdateProfileModal";
 import "./DashboardNavbar.css";
 
 const MENU_ITEMS = [
-  { icon: "📇", label: "My Tutor Profile" },
   { icon: "🧑‍🎓", label: "My Student" },
 ];
 
@@ -27,7 +26,7 @@ const getAvatarColor = (name = "") => {
   return AVATAR_COLORS[hash];
 };
 
-function TutorNavbar({ user, active = "dashboard" }) {
+function TutorNavbar({ user, active = "dashboard", minimal = false }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -75,31 +74,35 @@ function TutorNavbar({ user, active = "dashboard" }) {
         <img src={logo} alt="Tutor Bridge" />
       </Link>
 
-      <div className="dash-navbar-links">
-        <Link
-          to="/tutor-dashboard"
-          className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
-        >
-          Dashboard
-        </Link>
-        <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
-          My Application
-        </a>
-        <Link
-          to="/support"
-          className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}
-        >
-          Support
-        </Link>
-      </div>
+      {!minimal && (
+        <div className="dash-navbar-links">
+          <Link
+            to="/tutor-dashboard"
+            className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
+          >
+            Dashboard
+          </Link>
+          <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
+            My Application
+          </a>
+          <Link
+            to="/support"
+            className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}
+          >
+            Support
+          </Link>
+        </div>
+      )}
 
       <div className="dash-navbar-actions">
-        <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
-            <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
-          </svg>
-        </button>
+        {!minimal && (
+          <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
+              <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
+            </svg>
+          </button>
+        )}
 
         <div className="profile-menu" ref={menuRef}>
           <button
@@ -150,6 +153,18 @@ function TutorNavbar({ user, active = "dashboard" }) {
               >
                 <span className="dropdown-item-icon">🔒</span>
                 Change Password
+              </button>
+
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/tutor/profile");
+                }}
+              >
+                <span className="dropdown-item-icon">📇</span>
+                My Tutor Profile
               </button>
 
               {MENU_ITEMS.map((item) => (
