@@ -21,10 +21,12 @@ const getApplicationByRequestAndTutor = async (requestId, tutorId) => {
 const getApplicationsForRequest = async (requestId) => {
   const result = await pool.query(
     `SELECT ta.*, u.full_name AS tutor_name, u.email AS tutor_email, u.profile_photo AS tutor_photo,
-       tp.cv_url AS tutor_cv_url
+       tp.cv_url AS tutor_cv_url,
+       b.status AS booking_status, b.rejection_reason AS booking_rejection_reason
      FROM tuition_applications ta
      JOIN users u ON u.user_id = ta.tutor_id
      LEFT JOIN tutor_profiles tp ON tp.user_id = ta.tutor_id
+     LEFT JOIN bookings b ON b.request_id = ta.request_id AND b.tutor_id = ta.tutor_id
      WHERE ta.request_id = $1
      ORDER BY ta.created_at DESC`,
     [requestId],
@@ -35,10 +37,12 @@ const getApplicationsForRequest = async (requestId) => {
 const getApplicationsForTutor = async (tutorId) => {
   const result = await pool.query(
     `SELECT ta.application_id, ta.status AS application_status, ta.created_at AS applied_at,
-       tr.*, u.full_name AS posted_by
+       tr.*, u.full_name AS posted_by,
+       b.status AS booking_status, b.rejection_reason AS booking_rejection_reason
      FROM tuition_applications ta
      JOIN tuition_requests tr ON tr.request_id = ta.request_id
      JOIN users u ON u.user_id = tr.user_id
+     LEFT JOIN bookings b ON b.request_id = ta.request_id AND b.tutor_id = ta.tutor_id
      WHERE ta.tutor_id = $1
      ORDER BY ta.created_at DESC`,
     [tutorId],

@@ -6,10 +6,7 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import UpdateProfileModal from "./UpdateProfileModal";
 import "./DashboardNavbar.css";
 
-const MENU_ITEMS = [
-  { icon: "📅", label: "My Booking" },
-  { icon: "🎓", label: "My Tutor" },
-];
+const MENU_ITEMS = [{ icon: "🎓", label: "My Tutor" }];
 
 const AVATAR_COLORS = ["#5b4fe8", "#2f9e44", "#e2574c", "#0891b2", "#d97706"];
 
@@ -27,7 +24,7 @@ const getAvatarColor = (name = "") => {
   return AVATAR_COLORS[hash];
 };
 
-function DashboardNavbar({ user, active = "dashboard" }) {
+function DashboardNavbar({ user, active = "dashboard", minimal = false }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -75,34 +72,38 @@ function DashboardNavbar({ user, active = "dashboard" }) {
         <img src={logo} alt="Tutor Bridge" />
       </Link>
 
-      <div className="dash-navbar-links">
-        <Link
-          to="/dashboard"
-          className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
-        >
-          Dashboard
-        </Link>
-        <Link
-          to="/student/my-requests"
-          className={`nav-pill nav-pill-green ${active === "my-requests" ? "nav-pill-active" : ""}`}
-        >
-          My Requests
-        </Link>
-        <Link
-          to="/support"
-          className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}
-        >
-          Support
-        </Link>
-      </div>
+      {!minimal && (
+        <div className="dash-navbar-links">
+          <Link
+            to="/dashboard"
+            className={`nav-pill nav-pill-tan ${active === "dashboard" ? "nav-pill-active" : ""}`}
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/student/my-requests"
+            className={`nav-pill nav-pill-green ${active === "my-requests" ? "nav-pill-active" : ""}`}
+          >
+            My Requests
+          </Link>
+          <Link
+            to="/support"
+            className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}
+          >
+            Support
+          </Link>
+        </div>
+      )}
 
       <div className="dash-navbar-actions">
-        <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
-            <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
-          </svg>
-        </button>
+        {!minimal && (
+          <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
+              <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
+            </svg>
+          </button>
+        )}
 
         <div className="profile-menu" ref={menuRef}>
           <button
@@ -153,6 +154,18 @@ function DashboardNavbar({ user, active = "dashboard" }) {
               >
                 <span className="dropdown-item-icon">🔒</span>
                 Change Password
+              </button>
+
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/student/my-bookings");
+                }}
+              >
+                <span className="dropdown-item-icon">📅</span>
+                My Booking
               </button>
 
               {MENU_ITEMS.map((item) => (

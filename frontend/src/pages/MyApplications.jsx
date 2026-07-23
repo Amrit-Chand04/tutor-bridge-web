@@ -6,10 +6,16 @@ import { getMyApplications } from "../service/Api";
 import { getDashboardPath } from "../utils/roleRoutes";
 import "./MyApplications.css";
 
-const APP_STATUS = {
-  pending: { label: "Pending", modifier: "pending" },
-  accepted: { label: "Booked", modifier: "booked" },
-  rejected: { label: "Another Tutor Booked", modifier: "another" },
+const getStatusDisplay = (a) => {
+  if (a.application_status === "accepted") {
+    if (a.booking_status === "booked") return { label: "Booked", modifier: "booked" };
+    if (a.booking_status === "rejected") return { label: "Rejected", modifier: "another" };
+    return { label: "Pending", modifier: "pending" };
+  }
+  if (a.application_status === "rejected") {
+    return { label: "Another Tutor Booked", modifier: "another" };
+  }
+  return { label: "Pending", modifier: "pending" };
 };
 
 const formatDate = (dateString) => {
@@ -91,7 +97,7 @@ function MyApplications() {
               </thead>
               <tbody>
                 {applications.map((a) => {
-                  const status = APP_STATUS[a.application_status];
+                  const status = getStatusDisplay(a);
                   return (
                     <tr key={a.application_id}>
                       <td>{a.request_id}</td>
@@ -158,8 +164,8 @@ function MyApplications() {
             <p className="ma-text">{viewTarget.description}</p>
 
             <div className="ma-modal-footer">
-              <span className={`ma-status-pill ma-status-${APP_STATUS[viewTarget.application_status].modifier}`}>
-                {APP_STATUS[viewTarget.application_status].label}
+              <span className={`ma-status-pill ma-status-${getStatusDisplay(viewTarget).modifier}`}>
+                {getStatusDisplay(viewTarget).label}
               </span>
               <p className="ma-applied-on">Applied on {formatDate(viewTarget.applied_at)}</p>
             </div>

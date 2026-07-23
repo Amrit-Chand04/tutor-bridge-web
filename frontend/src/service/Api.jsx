@@ -135,3 +135,19 @@ export const rejectTutorProfile = (id, reason) => {
 export const deleteTutorProfile = (id) => {
   return Api.delete(`/api/tutor-profile/${id}`);
 };
+
+export const getMyBookings = () => {
+  return Api.get("/api/bookings/my");
+};
+
+export const getAllBookings = () => {
+  return Api.get("/api/bookings");
+};
+
+export const acceptBooking = (id) => {
+  return Api.put(`/api/bookings/${id}/accept`);
+};
+
+export const rejectBooking = (id, reason) => {
+  return Api.put(`/api/bookings/${id}/reject`, { reason });
+};

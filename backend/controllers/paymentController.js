@@ -5,6 +5,7 @@ const {
   rejectOtherPendingApplications,
 } = require("../models/tuitionApplicationModel");
 const { getRequestById, closeRequest } = require("../models/tuitionRequestModel");
+const { createBooking } = require("../models/bookingModel");
 const { getUserContact } = require("../models/userModel");
 const { initiatePayment, lookupPayment } = require("../services/khaltiService");
 
@@ -21,7 +22,7 @@ const KHALTI_STATUS_MAP = {
 };
 
 const STATUS_MESSAGES = {
-  completed: "Payment successful, tutor booked!",
+  completed: "Your request is awaiting admin approval.",
   pending: "Payment is still pending. Please try again in a moment.",
   expired: "Payment link expired. Please try booking again.",
   canceled: "Payment was canceled.",
@@ -95,6 +96,7 @@ const verifyBookingPayment = async (req, res) => {
       await acceptApplication(application.application_id);
       await rejectOtherPendingApplications(application.request_id, application.application_id);
       await closeRequest(application.request_id);
+      await createBooking(application.request_id, request.user_id, application.tutor_id);
     }
 
     res.status(200).json({

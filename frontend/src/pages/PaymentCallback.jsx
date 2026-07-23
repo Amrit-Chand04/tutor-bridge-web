@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { verifyBookingPayment } from "../service/Api";
 import "./PaymentCallback.css";
@@ -7,6 +7,7 @@ function PaymentCallback() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [state, setState] = useState({ loading: true, success: false, message: "" });
+  const verifiedPidx = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,6 +21,9 @@ function PaymentCallback() {
       setState({ loading: false, success: false, message: "Missing payment reference." });
       return;
     }
+
+    if (verifiedPidx.current === pidx) return;
+    verifiedPidx.current = pidx;
 
     verifyBookingPayment(pidx)
       .then((res) => {
@@ -48,7 +52,7 @@ function PaymentCallback() {
             <span className={`pc-icon ${state.success ? "pc-icon-success" : "pc-icon-fail"}`}>
               {state.success ? "✓" : "✕"}
             </span>
-            <h2>{state.success ? "Booking Confirmed" : "Payment Not Completed"}</h2>
+            <h2>{state.success ? "Payment Successful" : "Payment Not Completed"}</h2>
             <p>{state.message}</p>
             <button className="pc-btn" onClick={() => navigate("/student/my-requests")}>
               Go to My Requests

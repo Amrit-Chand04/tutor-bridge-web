@@ -261,6 +261,10 @@
   background: #fdecea;
   color: #e2574c;
 }
+.mtr-app-status-pending {
+  background: #fff4e5;
+  color: #b45309;
+}
 
 .mtr-app-cv-btn,
 .mtr-app-no-cv,

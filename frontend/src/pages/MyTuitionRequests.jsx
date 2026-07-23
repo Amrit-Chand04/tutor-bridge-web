@@ -249,8 +249,14 @@ function MyTuitionRequests() {
                           )}
                         </button>
                       )}
-                      {a.status === "accepted" && (
+                      {a.status === "accepted" && a.booking_status === "booked" && (
                         <span className="mtr-app-status mtr-app-status-accepted">Booked</span>
+                      )}
+                      {a.status === "accepted" && a.booking_status === "rejected" && (
+                        <span className="mtr-app-status mtr-app-status-rejected">Rejected</span>
+                      )}
+                      {a.status === "accepted" && (!a.booking_status || a.booking_status === "pending") && (
+                        <span className="mtr-app-status mtr-app-status-pending">Pending</span>
                       )}
                       {a.status === "rejected" && (
                         <span className="mtr-app-status mtr-app-status-rejected">Another Tutor Selected</span>
