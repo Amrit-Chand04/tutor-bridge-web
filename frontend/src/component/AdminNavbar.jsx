@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import logo from "../assets/tutor_bridge_logo.png";
 import ChangePasswordModal from "./ChangePasswordModal";
 import UpdateProfileModal from "./UpdateProfileModal";
+import NotificationBell from "./NotificationBell";
 import "./DashboardNavbar.css";
 
 const AVATAR_COLORS = ["#5b4fe8", "#2f9e44", "#e2574c", "#0891b2", "#d97706"];
@@ -29,11 +29,6 @@ function AdminNavbar({ user, active = "dashboard", minimal = false }) {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const menuRef = useRef(null);
-
-  const notReady = () => {
-    setMenuOpen(false);
-    toast("Coming soon");
-  };
 
   const confirmLogout = () => {
     localStorage.removeItem("token");
@@ -94,14 +89,7 @@ function AdminNavbar({ user, active = "dashboard", minimal = false }) {
       )}
 
       <div className="dash-navbar-actions">
-        {!minimal && (
-          <button className="icon-btn" aria-label="Notifications" onClick={notReady}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M18 8a6 6 0 1 0-12 0c0 4-1.5 5.5-1.5 6.5h15C18 13.5 18 12 18 8z" />
-              <path d="M9.5 17.5a2.5 2.5 0 0 0 5 0" />
-            </svg>
-          </button>
-        )}
+        {!minimal && <NotificationBell />}
 
         <div className="profile-menu" ref={menuRef}>
           <button

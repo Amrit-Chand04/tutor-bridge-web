@@ -11,8 +11,13 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const socketService = require("./services/socketService");
+const http = require("http");
 
 const app = express();
+const httpServer = http.createServer(app);
+socketService.init(httpServer);
 
 // Middleware
 app.use(cors());
@@ -27,6 +32,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
@@ -55,6 +61,6 @@ app.get("/db-check", async (req, res) => {
 // Server
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

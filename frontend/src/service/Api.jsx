@@ -175,3 +175,11 @@ export const saveReview = (tutorId, rating, reviewText) => {
 export const deleteReview = (tutorId) => {
   return Api.delete(`/api/reviews/${tutorId}`);
 };
+
+export const getMyNotifications = () => {
+  return Api.get("/api/notifications/my");
+};
+
+export const readAllNotifications = () => {
+  return Api.put("/api/notifications/read-all");
+};

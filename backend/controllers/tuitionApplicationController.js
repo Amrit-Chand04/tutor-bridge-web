@@ -10,6 +10,8 @@ const {
 } = require("../models/tuitionApplicationModel");
 const { getRequestById, closeRequest } = require("../models/tuitionRequestModel");
 const { getProfileByUserId } = require("../models/tutorProfileModel");
+const { createNotification } = require("../models/notificationModel");
+const { emitToUser } = require("../services/socketService");
 
 const applyToRequest = async (req, res) => {
   try {
@@ -34,6 +36,11 @@ const applyToRequest = async (req, res) => {
     }
 
     const application = await createApplication(requestId, req.user.user_id);
+
+    const message = `A tutor applied to your request: ${request.subject}`;
+    await createNotification(request.user_id, message);
+    emitToUser(request.user_id, "notification", { message, created_at: new Date() });
+
     res.status(201).json({
       message: "Application submitted successfully",
       application,

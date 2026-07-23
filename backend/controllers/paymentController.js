@@ -8,6 +8,8 @@ const { getRequestById, closeRequest } = require("../models/tuitionRequestModel"
 const { createBooking } = require("../models/bookingModel");
 const { getUserContact } = require("../models/userModel");
 const { initiatePayment, lookupPayment } = require("../services/khaltiService");
+const { createNotification, createNotificationsForRole } = require("../models/notificationModel");
+const { emitToUser, emitToRole } = require("../services/socketService");
 
 const BOOKING_FEE_PAISA = 1000; // Rs 10 flat booking fee
 
@@ -97,6 +99,13 @@ const verifyBookingPayment = async (req, res) => {
       await rejectOtherPendingApplications(application.request_id, application.application_id);
       await closeRequest(application.request_id);
       await createBooking(application.request_id, request.user_id, application.tutor_id);
+
+      await createNotification(request.user_id, "Payment successful");
+      emitToUser(request.user_id, "notification", { message: "Payment successful", created_at: new Date() });
+
+      const adminMessage = `New booking request awaiting approval: ${request.subject}`;
+      await createNotificationsForRole("admin", adminMessage);
+      emitToRole("admin", "notification", { message: adminMessage, created_at: new Date() });
     }
 
     res.status(200).json({

@@ -3,6 +3,8 @@ const {
   getOpenTuitionRequests,
   getRequestsByUser,
 } = require("../models/tuitionRequestModel");
+const { createNotificationsForRole } = require("../models/notificationModel");
+const { emitToRole } = require("../services/socketService");
 
 const ALLOWED_GENDERS = ["male", "female", "any"];
 const CONTACT_NUMBER_REGEX = /^\d+$/;
@@ -54,6 +56,10 @@ const createRequest = async (req, res) => {
       preferredTime,
       description,
     });
+
+    const message = `New tuition request posted: ${subject}`;
+    await createNotificationsForRole("tutor", message);
+    emitToRole("tutor", "notification", { message, created_at: new Date() });
 
     res.status(201).json({
       message: "Tuition request created successfully",

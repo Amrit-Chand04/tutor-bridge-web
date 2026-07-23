@@ -6,6 +6,8 @@ const {
   acceptBooking,
   rejectBooking,
 } = require("../models/bookingModel");
+const { createNotification } = require("../models/notificationModel");
+const { emitToUser } = require("../services/socketService");
 
 const getMyBookings = async (req, res) => {
   try {
@@ -54,6 +56,13 @@ const acceptBookingAdmin = async (req, res) => {
     }
 
     const updated = await acceptBooking(req.params.id);
+
+    const message = "Booking accepted";
+    await createNotification(booking.student_id, message);
+    await createNotification(booking.tutor_id, message);
+    emitToUser(booking.student_id, "notification", { message, created_at: new Date() });
+    emitToUser(booking.tutor_id, "notification", { message, created_at: new Date() });
+
     res.status(200).json({
       message: "Booking accepted",
       booking: updated,
