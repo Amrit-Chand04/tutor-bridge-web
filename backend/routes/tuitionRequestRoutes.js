@@ -1,9 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { createRequest, getRequests } = require("../controllers/tuitionRequestController");
+const { createRequest, getRequests, getMyRequests } = require("../controllers/tuitionRequestController");
+const {
+  applyToRequest,
+  listApplicationsForRequest,
+  acceptTutorApplication,
+  rejectTutorApplication,
+} = require("../controllers/tuitionApplicationController");
 const { protect, restrictTo } = require("../middleware/authMiddleware");
 
 router.post("/", protect, restrictTo("student"), createRequest);
 router.get("/", protect, restrictTo("tutor"), getRequests);
+router.get("/my", protect, restrictTo("student"), getMyRequests);
+
+router.post("/:id/apply", protect, restrictTo("tutor"), applyToRequest);
+router.get("/:id/applications", protect, restrictTo("student"), listApplicationsForRequest);
+router.put("/applications/:appId/accept", protect, restrictTo("student"), acceptTutorApplication);
+router.put("/applications/:appId/reject", protect, restrictTo("student"), rejectTutorApplication);
 
 module.exports = router;

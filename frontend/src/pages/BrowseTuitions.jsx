@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import TutorNavbar from "../component/TutorNavbar";
-import { getOpenTuitionRequests } from "../service/Api";
+import { getOpenTuitionRequests, applyToTuitionRequest } from "../service/Api";
 import { getDashboardPath } from "../utils/roleRoutes";
 import "./BrowseTuitions.css";
 
@@ -20,6 +20,7 @@ function BrowseTuitions() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewRequest, setViewRequest] = useState(null);
+  const [applyingId, setApplyingId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -49,7 +50,39 @@ function BrowseTuitions() {
     }
   };
 
-  const notReady = () => toast("Coming soon");
+  const handleApply = async (request) => {
+    try {
+      setApplyingId(request.request_id);
+      const res = await applyToTuitionRequest(request.request_id);
+      toast.success(res.data.message);
+      setRequests((prev) =>
+        prev.map((r) => (r.request_id === request.request_id ? { ...r, my_application_status: "pending" } : r)),
+      );
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to apply");
+    } finally {
+      setApplyingId(null);
+    }
+  };
+
+  const getApplyState = (r) => {
+    if (applyingId === r.request_id) {
+      return { label: "Applying...", modifier: "applying", disabled: true, spinner: true };
+    }
+    if (r.my_application_status === "accepted") {
+      return { label: "Accepted", modifier: "accepted", disabled: true };
+    }
+    if (r.status === "closed") {
+      return { label: "Closed", modifier: "closed", disabled: true };
+    }
+    if (r.my_application_status === "rejected") {
+      return { label: "Rejected", modifier: "rejected", disabled: true };
+    }
+    if (r.my_application_status === "pending") {
+      return { label: "Applied", modifier: "applied", disabled: true };
+    }
+    return { label: "Apply", modifier: null, disabled: false };
+  };
 
   if (!tutor) return null;
 
@@ -87,25 +120,32 @@ function BrowseTuitions() {
                 </tr>
               </thead>
               <tbody>
-                {requests.map((r) => (
-                  <tr key={r.request_id}>
-                    <td>{r.request_id}</td>
-                    <td>{r.posted_by}</td>
-                    <td>{r.subject}</td>
-                    <td>{r.class_level}</td>
-                    <td>{r.location}</td>
-                    <td>Rs {Number(r.budget).toLocaleString()}/month</td>
-                    <td>{formatDate(r.created_at)}</td>
-                    <td>
-                      <button className="bt-action-view" onClick={() => setViewRequest(r)}>
-                        View
-                      </button>
-                      <button className="bt-action-apply" onClick={notReady}>
-                        Apply
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {requests.map((r) => {
+                  const applyState = getApplyState(r);
+                  return (
+                    <tr key={r.request_id}>
+                      <td>{r.request_id}</td>
+                      <td>{r.posted_by}</td>
+                      <td>{r.subject}</td>
+                      <td>{r.class_level}</td>
+                      <td>{r.location}</td>
+                      <td>Rs {Number(r.budget).toLocaleString()}/month</td>
+                      <td>{formatDate(r.created_at)}</td>
+                      <td>
+                        <button className="bt-action-view" onClick={() => setViewRequest(r)}>
+                          View
+                        </button>
+                        <button
+                          className={`bt-action-apply ${applyState.modifier ? `bt-state-${applyState.modifier}` : ""}`}
+                          onClick={() => handleApply(r)}
+                          disabled={applyState.disabled}
+                        >
+                          {applyState.spinner && <span className="spinner" />} {applyState.label}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

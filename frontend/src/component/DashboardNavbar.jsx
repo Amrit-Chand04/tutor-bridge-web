@@ -82,9 +82,12 @@ function DashboardNavbar({ user, active = "dashboard" }) {
         >
           Dashboard
         </Link>
-        <a href="#" className="nav-pill nav-pill-green" onClick={(e) => { e.preventDefault(); notReady(); }}>
+        <Link
+          to="/student/my-requests"
+          className={`nav-pill nav-pill-green ${active === "my-requests" ? "nav-pill-active" : ""}`}
+        >
           My Requests
-        </a>
+        </Link>
         <Link
           to="/support"
           className={`nav-pill nav-pill-tan ${active === "support" ? "nav-pill-active" : ""}`}

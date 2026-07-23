@@ -44,6 +44,26 @@ export const getOpenTuitionRequests = () => {
   return Api.get("/api/tuition-requests");
 };
 
+export const getMyTuitionRequests = () => {
+  return Api.get("/api/tuition-requests/my");
+};
+
+export const applyToTuitionRequest = (id) => {
+  return Api.post(`/api/tuition-requests/${id}/apply`);
+};
+
+export const getApplicationsForRequest = (id) => {
+  return Api.get(`/api/tuition-requests/${id}/applications`);
+};
+
+export const acceptTutorApplication = (appId) => {
+  return Api.put(`/api/tuition-requests/applications/${appId}/accept`);
+};
+
+export const rejectTutorApplication = (appId) => {
+  return Api.put(`/api/tuition-requests/applications/${appId}/reject`);
+};
+
 export const getAllUsers = () => {
   return Api.get("/api/users");
 };

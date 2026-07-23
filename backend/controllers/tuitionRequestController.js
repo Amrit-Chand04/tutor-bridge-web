@@ -1,4 +1,8 @@
-const { createTuitionRequest, getOpenTuitionRequests } = require("../models/tuitionRequestModel");
+const {
+  createTuitionRequest,
+  getOpenTuitionRequests,
+  getRequestsByUser,
+} = require("../models/tuitionRequestModel");
 
 const ALLOWED_GENDERS = ["male", "female", "any"];
 const CONTACT_NUMBER_REGEX = /^\d+$/;
@@ -65,7 +69,7 @@ const createRequest = async (req, res) => {
 
 const getRequests = async (req, res) => {
   try {
-    const requests = await getOpenTuitionRequests();
+    const requests = await getOpenTuitionRequests(req.user.user_id);
     res.status(200).json({ requests });
   } catch (error) {
     res.status(500).json({
@@ -75,7 +79,20 @@ const getRequests = async (req, res) => {
   }
 };
 
+const getMyRequests = async (req, res) => {
+  try {
+    const requests = await getRequestsByUser(req.user.user_id);
+    res.status(200).json({ requests });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch your tuition requests",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createRequest,
   getRequests,
+  getMyRequests,
 };

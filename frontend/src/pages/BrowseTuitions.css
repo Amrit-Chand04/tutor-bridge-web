@@ -65,6 +65,10 @@
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
+.bt-table td:last-child {
+  display: flex;
+  gap: 8px;
+}
 .bt-table tbody tr:last-child td {
   border-bottom: none;
 }
@@ -75,26 +79,71 @@
 .bt-action-view,
 .bt-action-apply {
   border: none;
-  background: none;
   font-size: 13.5px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: background-color 0.15s ease;
+  padding: 8px 12px;
+  width: 108px;
+  border-radius: 999px;
+  transition: opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 .bt-action-view {
-  color: #3b5bdb;
+  background: #5b4fe8;
+  color: #fff;
 }
 .bt-action-view:hover {
-  background: #eaf1ff;
+  opacity: 0.85;
 }
 .bt-action-apply {
+  background: #2f9e44;
+  color: #fff;
+}
+.bt-action-apply:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.bt-action-apply:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+.bt-state-applying {
+  opacity: 0.85;
+}
+.bt-state-applied {
+  background: #e6f4ea;
   color: #2f9e44;
 }
-.bt-action-apply:hover {
-  background: #e6f4ea;
+.bt-state-accepted {
+  background: #ece9fe;
+  color: #5b4fe8;
+}
+.bt-state-rejected {
+  background: #fdecea;
+  color: #e2574c;
+}
+.bt-state-closed {
+  background: #f0eff5;
+  color: var(--text-h);
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bt-spin 0.7s linear infinite;
+}
+@keyframes bt-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .bt-modal-box {
