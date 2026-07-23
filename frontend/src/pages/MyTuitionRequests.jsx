@@ -5,7 +5,7 @@ import DashboardNavbar from "../component/DashboardNavbar";
 import {
   getMyTuitionRequests,
   getApplicationsForRequest,
-  acceptTutorApplication,
+  initiateBookingPayment,
 } from "../service/Api";
 import { getDashboardPath } from "../utils/roleRoutes";
 import "./MyTuitionRequests.css";
@@ -73,26 +73,13 @@ function MyTuitionRequests() {
     }
   };
 
-  const handleAccept = async (application) => {
+  const handleBook = async (application) => {
     try {
       setBusyId(application.application_id);
-      const res = await acceptTutorApplication(application.application_id);
-      toast.success(res.data.message);
-
-      setApplications((prev) =>
-        prev.map((a) => {
-          if (a.application_id === application.application_id) return { ...a, ...res.data.application };
-          if (a.status === "pending") return { ...a, status: "rejected" };
-          return a;
-        }),
-      );
-      setRequests((prev) =>
-        prev.map((r) => (r.request_id === application.request_id ? { ...r, status: "closed" } : r)),
-      );
-      setApplicationsTarget((prev) => (prev ? { ...prev, status: "closed" } : prev));
+      const res = await initiateBookingPayment(application.application_id);
+      window.location.href = res.data.payment_url;
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to book tutor");
-    } finally {
+      toast.error(err.response?.data?.message || "Failed to start payment");
       setBusyId(null);
     }
   };
@@ -250,10 +237,16 @@ function MyTuitionRequests() {
                       {a.status === "pending" && (
                         <button
                           className="mtr-app-book"
-                          onClick={() => handleAccept(a)}
+                          onClick={() => handleBook(a)}
                           disabled={busyId === a.application_id}
                         >
-                          {busyId === a.application_id ? <span className="spinner" /> : "Book"}
+                          {busyId === a.application_id ? (
+                            <>
+                              <span className="spinner" /> Redirecting...
+                            </>
+                          ) : (
+                            "Book"
+                          )}
                         </button>
                       )}
                       {a.status === "accepted" && (

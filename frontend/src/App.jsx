@@ -16,6 +16,7 @@ import TutorProfile from "./pages/TutorProfile";
 import AdminTutorProfiles from "./pages/AdminTutorProfiles";
 import MyTuitionRequests from "./pages/MyTuitionRequests";
 import MyApplications from "./pages/MyApplications";
+import PaymentCallback from "./pages/PaymentCallback";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/admin/tutor-profiles" element={<AdminTutorProfiles />} />
         <Route path="/student/my-requests" element={<MyTuitionRequests />} />
         <Route path="/tutor/my-applications" element={<MyApplications />} />
+        <Route path="/student/payment/callback" element={<PaymentCallback />} />
       </Routes>
     </BrowserRouter>
   );

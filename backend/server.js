@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const tuitionRequestRoutes = require("./routes/tuitionRequestRoutes");
 const supportTicketRoutes = require("./routes/supportTicketRoutes");
 const tutorProfileRoutes = require("./routes/tutorProfileRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/tuition-requests", tuitionRequestRoutes);
 app.use("/api/support-tickets", supportTicketRoutes);
 app.use("/api/tutor-profile", tutorProfileRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

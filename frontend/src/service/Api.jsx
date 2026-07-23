@@ -56,6 +56,14 @@ export const getMyApplications = () => {
   return Api.get("/api/tuition-requests/my-applications");
 };
 
+export const initiateBookingPayment = (applicationId) => {
+  return Api.post("/api/payments/initiate", { applicationId });
+};
+
+export const verifyBookingPayment = (pidx) => {
+  return Api.post("/api/payments/verify", { pidx });
+};
+
 export const getApplicationsForRequest = (id) => {
   return Api.get(`/api/tuition-requests/${id}/applications`);
 };
