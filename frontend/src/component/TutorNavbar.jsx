@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/tutor_bridge_logo.png";
 import ChangePasswordModal from "./ChangePasswordModal";
+import UpdateProfileModal from "./UpdateProfileModal";
 import "./DashboardNavbar.css";
 
 const MENU_ITEMS = [
-  { icon: "👤", label: "Update Profile" },
   { icon: "📇", label: "My Tutor Profile" },
   { icon: "🧑‍🎓", label: "My Student" },
 ];
@@ -32,6 +32,7 @@ function TutorNavbar({ user, active = "dashboard" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const menuRef = useRef(null);
 
   const notReady = () => {
@@ -105,7 +106,7 @@ function TutorNavbar({ user, active = "dashboard" }) {
             aria-expanded={menuOpen}
           >
             <span className="avatar" style={{ background: avatarColor }}>
-              {initials}
+              {user?.profile_photo ? <img src={user.profile_photo} alt="" /> : initials}
             </span>
             <span className="profile-label">Profile</span>
           </button>
@@ -114,7 +115,7 @@ function TutorNavbar({ user, active = "dashboard" }) {
             <div className="profile-dropdown" role="menu">
               <div className="profile-dropdown-header">
                 <span className="avatar avatar-lg" style={{ background: avatarColor }}>
-                  {initials}
+                  {user?.profile_photo ? <img src={user.profile_photo} alt="" /> : initials}
                 </span>
                 <div className="profile-dropdown-info">
                   <p className="profile-dropdown-name">{user?.full_name || "User"}</p>
@@ -123,6 +124,18 @@ function TutorNavbar({ user, active = "dashboard" }) {
               </div>
 
               <div className="profile-dropdown-divider" />
+
+              <button
+                role="menuitem"
+                className="dropdown-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setShowUpdateProfile(true);
+                }}
+              >
+                <span className="dropdown-item-icon">👤</span>
+                Update Profile
+              </button>
 
               <button
                 role="menuitem"
@@ -178,6 +191,10 @@ function TutorNavbar({ user, active = "dashboard" }) {
 
       {showChangePassword && (
         <ChangePasswordModal onClose={() => setShowChangePassword(false)} />
+      )}
+
+      {showUpdateProfile && (
+        <UpdateProfileModal user={user} onClose={() => setShowUpdateProfile(false)} />
       )}
     </nav>
   );

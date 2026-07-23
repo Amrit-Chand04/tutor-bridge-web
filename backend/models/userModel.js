@@ -49,6 +49,24 @@ const deleteUserById = async (userId) => {
   return result.rows[0];
 };
 
+const updateProfile = async (userId, fullName, profilePhotoUrl) => {
+  if (profilePhotoUrl) {
+    const result = await pool.query(
+      `UPDATE users SET full_name = $1, profile_photo = $2 WHERE user_id = $3
+       RETURNING user_id, full_name, email, role, profile_photo, status`,
+      [fullName, profilePhotoUrl, userId],
+    );
+    return result.rows[0];
+  }
+
+  const result = await pool.query(
+    `UPDATE users SET full_name = $1 WHERE user_id = $2
+     RETURNING user_id, full_name, email, role, profile_photo, status`,
+    [fullName, userId],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -56,4 +74,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   deleteUserById,
+  updateProfile,
 };

@@ -7,6 +7,7 @@ const {
   getAllUsers,
   getUserById,
   deleteUserById,
+  updateProfile,
 } = require("../models/userModel");
 const {
   upsertPendingRegistration,
@@ -19,6 +20,7 @@ const {
   deletePasswordResetByEmail,
 } = require("../models/passwordResetModel");
 const { sendOtpEmail, sendPasswordResetOtpEmail } = require("../services/emailService");
+const { uploadProfilePhoto } = require("../services/cloudinaryService");
 
 const ALLOWED_ROLES = ["student", "tutor"];
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -431,6 +433,36 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUserProfile = async (req, res) => {
+  try {
+    const { full_name } = req.body;
+
+    if (!full_name) {
+      return res.status(400).json({
+        message: "Full name is required",
+      });
+    }
+
+    let profilePhotoUrl = null;
+    if (req.file) {
+      const uploadResult = await uploadProfilePhoto(req.file.buffer);
+      profilePhotoUrl = uploadResult.secure_url;
+    }
+
+    const user = await updateProfile(req.user.user_id, full_name, profilePhotoUrl);
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update profile",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   verifyOtp,
@@ -441,4 +473,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   changePassword,
+  updateUserProfile,
 };

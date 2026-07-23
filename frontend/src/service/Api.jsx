@@ -51,3 +51,9 @@ export const getAllUsers = () => {
 export const deleteUser = (id) => {
   return Api.delete(`/api/users/${id}`);
 };
+
+export const updateProfile = (formData) => {
+  return Api.put("/api/users/profile", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
