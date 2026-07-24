@@ -6,6 +6,7 @@ import {
   getMyTuitionRequests,
   getApplicationsForRequest,
   initiateBookingPayment,
+  deleteTuitionRequest,
 } from "../service/Api";
 import { getDashboardPath } from "../utils/roleRoutes";
 import "./MyTuitionRequests.css";
@@ -30,6 +31,8 @@ function MyTuitionRequests() {
   const [applications, setApplications] = useState([]);
   const [applicationsLoading, setApplicationsLoading] = useState(false);
   const [busyId, setBusyId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -81,6 +84,20 @@ function MyTuitionRequests() {
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to start payment");
       setBusyId(null);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setDeleting(true);
+      const res = await deleteTuitionRequest(deleteTarget.request_id);
+      toast.success(res.data.message);
+      setRequests((prev) => prev.filter((r) => r.request_id !== deleteTarget.request_id));
+      setDeleteTarget(null);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete tuition request");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -140,6 +157,11 @@ function MyTuitionRequests() {
                       <button className="mtr-action-applications" onClick={() => openApplications(r)}>
                         View Applications
                       </button>
+                      {r.status === "open" && (
+                        <button className="mtr-action-delete" onClick={() => setDeleteTarget(r)}>
+                          Delete
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -270,6 +292,25 @@ function MyTuitionRequests() {
             <div className="modal-actions">
               <button className="modal-btn-cancel" onClick={() => setApplicationsTarget(null)}>
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {deleteTarget && (
+        <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete Tuition Request?</h3>
+            <p>
+              Are you sure you want to delete <strong>{deleteTarget.subject}</strong>? This cannot
+              be undone.
+            </p>
+            <div className="modal-actions">
+              <button className="modal-btn-cancel" onClick={() => setDeleteTarget(null)}>
+                Cancel
+              </button>
+              <button className="modal-btn-confirm" onClick={handleDelete} disabled={deleting}>
+                {deleting ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>

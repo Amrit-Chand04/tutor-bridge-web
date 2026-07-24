@@ -172,6 +172,35 @@
 }
 
 
+.tp-actions-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tp-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: #fdecea;
+  color: #e2574c;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 14px 32px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.tp-delete-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.tp-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .tp-save-btn {
   display: inline-flex;
   align-items: center;

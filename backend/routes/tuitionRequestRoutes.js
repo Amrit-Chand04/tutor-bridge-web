@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createRequest, getRequests, getMyRequests } = require("../controllers/tuitionRequestController");
+const { createRequest, getRequests, getMyRequests, deleteRequest } = require("../controllers/tuitionRequestController");
 const {
   applyToRequest,
   listMyApplications,
@@ -19,5 +19,6 @@ router.post("/:id/apply", protect, restrictTo("tutor"), applyToRequest);
 router.get("/:id/applications", protect, restrictTo("student"), listApplicationsForRequest);
 router.put("/applications/:appId/accept", protect, restrictTo("student"), acceptTutorApplication);
 router.put("/applications/:appId/reject", protect, restrictTo("student"), rejectTutorApplication);
+router.delete("/:id", protect, restrictTo("student"), deleteRequest);
 
 module.exports = router;

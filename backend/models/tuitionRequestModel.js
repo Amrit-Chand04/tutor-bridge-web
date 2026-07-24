@@ -75,10 +75,19 @@ const closeRequest = async (requestId) => {
   return result.rows[0];
 };
 
+const deleteTuitionRequest = async (requestId, userId) => {
+  const result = await pool.query(
+    "DELETE FROM tuition_requests WHERE request_id = $1 AND user_id = $2 RETURNING *",
+    [requestId, userId],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   createTuitionRequest,
   getOpenTuitionRequests,
   getRequestsByUser,
   getRequestById,
   closeRequest,
+  deleteTuitionRequest,
 };

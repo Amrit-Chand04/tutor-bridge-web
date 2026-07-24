@@ -89,7 +89,8 @@
 }
 
 .mtr-action-view,
-.mtr-action-applications {
+.mtr-action-applications,
+.mtr-action-delete {
   border: none;
   font-size: 13.5px;
   font-weight: 700;
@@ -112,6 +113,13 @@
   color: #5b4fe8;
 }
 .mtr-action-applications:hover {
+  opacity: 0.85;
+}
+.mtr-action-delete {
+  background: #fdecea;
+  color: #e2574c;
+}
+.mtr-action-delete:hover {
   opacity: 0.85;
 }
 

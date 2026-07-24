@@ -48,6 +48,10 @@ export const getMyTuitionRequests = () => {
   return Api.get("/api/tuition-requests/my");
 };
 
+export const deleteTuitionRequest = (id) => {
+  return Api.delete(`/api/tuition-requests/${id}`);
+};
+
 export const applyToTuitionRequest = (id) => {
   return Api.post(`/api/tuition-requests/${id}/apply`);
 };
@@ -112,6 +116,10 @@ export const addTicketMessage = (id, message) => {
 
 export const getMyTutorProfile = () => {
   return Api.get("/api/tutor-profile/me");
+};
+
+export const deleteMyTutorProfile = () => {
+  return Api.delete("/api/tutor-profile/me");
 };
 
 export const saveTutorProfile = (formData) => {

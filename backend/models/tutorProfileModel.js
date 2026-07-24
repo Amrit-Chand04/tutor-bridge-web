@@ -75,6 +75,14 @@ const deleteProfile = async (profileId) => {
   return result.rows[0];
 };
 
+const deleteProfileByUserId = async (userId) => {
+  const result = await pool.query(
+    "DELETE FROM tutor_profiles WHERE user_id = $1 RETURNING *",
+    [userId],
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   getProfileByUserId,
   upsertProfile,
@@ -82,4 +90,5 @@ module.exports = {
   approveProfile,
   rejectProfile,
   deleteProfile,
+  deleteProfileByUserId,
 };

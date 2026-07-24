@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import TutorNavbar from "../component/TutorNavbar";
-import { getMyTutorProfile, saveTutorProfile } from "../service/Api";
+import { getMyTutorProfile, saveTutorProfile, deleteMyTutorProfile } from "../service/Api";
 import { getDashboardPath } from "../utils/roleRoutes";
 import "./TutorProfile.css";
 
@@ -18,6 +18,8 @@ function TutorProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [status, setStatus] = useState("not_submitted");
   const [cvUrl, setCvUrl] = useState(null);
   const [cvFile, setCvFile] = useState(null);
@@ -113,6 +115,30 @@ function TutorProfile() {
       toast.error(err.response?.data?.message || "Failed to save tutor profile");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDeleteProfile = async () => {
+    try {
+      setDeleting(true);
+      const res = await deleteMyTutorProfile();
+      toast.success(res.data.message);
+      setStatus("not_submitted");
+      setCvUrl(null);
+      setCvFile(null);
+      setForm({
+        degree: "",
+        institution: "",
+        passingYear: "",
+        yearsExperience: "",
+        description: "",
+        skills: "",
+      });
+      setShowDeleteConfirm(false);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete tutor profile");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -223,13 +249,45 @@ function TutorProfile() {
               </div>
             </div>
 
-            <button type="submit" className="tp-save-btn" disabled={saving}>
-              {saving && <span className="spinner" />}
-              {saving ? "Saving..." : "Save Tutor Profile"}
-            </button>
+            <div className="tp-actions-row">
+              <button type="submit" className="tp-save-btn" disabled={saving}>
+                {saving && <span className="spinner" />}
+                {saving ? "Saving..." : "Save Tutor Profile"}
+              </button>
+              {status !== "not_submitted" && (
+                <button
+                  type="button"
+                  className="tp-delete-btn"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  disabled={saving}
+                >
+                  Delete Tutor Profile
+                </button>
+              )}
+            </div>
           </form>
         )}
       </section>
+
+      {showDeleteConfirm && (
+        <div className="modal-overlay" onClick={() => setShowDeleteConfirm(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete Tutor Profile?</h3>
+            <p>
+              This will permanently remove your CV, education, experience, and verification
+              status. This cannot be undone.
+            </p>
+            <div className="modal-actions">
+              <button className="modal-btn-cancel" onClick={() => setShowDeleteConfirm(false)}>
+                Cancel
+              </button>
+              <button className="modal-btn-confirm" onClick={handleDeleteProfile} disabled={deleting}>
+                {deleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

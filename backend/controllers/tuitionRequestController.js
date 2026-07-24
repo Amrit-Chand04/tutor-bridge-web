@@ -2,6 +2,8 @@ const {
   createTuitionRequest,
   getOpenTuitionRequests,
   getRequestsByUser,
+  getRequestById,
+  deleteTuitionRequest,
 } = require("../models/tuitionRequestModel");
 const { createNotificationsForRole } = require("../models/notificationModel");
 const { emitToRole } = require("../services/socketService");
@@ -97,8 +99,29 @@ const getMyRequests = async (req, res) => {
   }
 };
 
+const deleteRequest = async (req, res) => {
+  try {
+    const request = await getRequestById(req.params.id);
+    if (!request || request.user_id !== req.user.user_id) {
+      return res.status(404).json({ message: "Tuition request not found" });
+    }
+    if (request.status !== "open") {
+      return res.status(400).json({ message: "Cannot delete a request that already has a booked tutor" });
+    }
+
+    await deleteTuitionRequest(req.params.id, req.user.user_id);
+    res.status(200).json({ message: "Tuition request deleted" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete tuition request",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createRequest,
   getRequests,
   getMyRequests,
+  deleteRequest,
 };

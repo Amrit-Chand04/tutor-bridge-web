@@ -7,12 +7,14 @@ const {
   approveTutorProfile,
   rejectTutorProfile,
   deleteTutorProfile,
+  deleteMyProfile,
 } = require("../controllers/tutorProfileController");
 const { protect, restrictTo } = require("../middleware/authMiddleware");
 const { uploadCv } = require("../middleware/upload");
 
 router.get("/me", protect, restrictTo("tutor"), getMyProfile);
 router.put("/", protect, restrictTo("tutor"), uploadCv, saveMyProfile);
+router.delete("/me", protect, restrictTo("tutor"), deleteMyProfile);
 
 router.get("/", protect, restrictTo("admin"), getAllProfilesAdmin);
 router.put("/:id/approve", protect, restrictTo("admin"), approveTutorProfile);

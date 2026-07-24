@@ -5,6 +5,7 @@ const {
   approveProfile,
   rejectProfile,
   deleteProfile,
+  deleteProfileByUserId,
 } = require("../models/tutorProfileModel");
 const { uploadCvImage } = require("../services/cloudinaryService");
 
@@ -138,6 +139,21 @@ const deleteTutorProfile = async (req, res) => {
   }
 };
 
+const deleteMyProfile = async (req, res) => {
+  try {
+    const profile = await deleteProfileByUserId(req.user.user_id);
+    if (!profile) {
+      return res.status(404).json({ message: "You don't have a tutor profile to delete" });
+    }
+    res.status(200).json({ message: "Tutor profile deleted" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete tutor profile",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   getMyProfile,
   saveMyProfile,
@@ -145,4 +161,5 @@ module.exports = {
   approveTutorProfile,
   rejectTutorProfile,
   deleteTutorProfile,
+  deleteMyProfile,
 };
