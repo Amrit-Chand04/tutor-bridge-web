@@ -61,6 +61,12 @@ app.get("/db-check", async (req, res) => {
 // Server
 const PORT = process.env.PORT || 3000;
 
-httpServer.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Only start listening when this file is run directly (not when Jest imports it)
+if (require.main === module) {
+  httpServer.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// Export app so Supertest can import it without starting a real server
+module.exports = app;
