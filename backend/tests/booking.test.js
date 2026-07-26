@@ -1,11 +1,11 @@
-// ── tests/booking.test.js ────────────────────────────────────────────────
+// ── tests/booking.test.js 
 // Tests for  GET  /api/bookings/my        (student)
 //        GET     /api/bookings/tutor/my   (tutor)
 //        GET     /api/bookings/           (admin)
 //        PUT     /api/bookings/:id/accept (admin)
 //        PUT     /api/bookings/:id/reject (admin)
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports 
 jest.mock("../models/bookingModel", () => ({
   getBookingsByStudent: jest.fn(),
   getBookingsByTutor: jest.fn(),
@@ -36,7 +36,7 @@ jest.mock("jsonwebtoken", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports
 const request = require("supertest");
 const app = require("../server");
 const {
@@ -52,7 +52,7 @@ const STUDENT_AUTH = "Bearer student_token";
 const TUTOR_AUTH = "Bearer tutor_token";
 const ADMIN_AUTH = "Bearer admin_token";
 
-// ── Step 3: Suite — GET /my (student) ─────────────────────────────────────
+// ── Step 3: Suite — GET /my (student) 
 describe("GET /api/bookings/my", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -66,7 +66,7 @@ describe("GET /api/bookings/my", () => {
   });
 });
 
-// ── Suite — GET /tutor/my (tutor) ─────────────────────────────────────────
+// ── Suite — GET /tutor/my (tutor)
 describe("GET /api/bookings/tutor/my", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -80,7 +80,7 @@ describe("GET /api/bookings/tutor/my", () => {
   });
 });
 
-// ── Suite — GET / (admin) ─────────────────────────────────────────────────
+// ── Suite — GET / (admin) 
 describe("GET /api/bookings/", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -94,7 +94,7 @@ describe("GET /api/bookings/", () => {
   });
 });
 
-// ── Suite — PUT /:id/accept (admin) ───────────────────────────────────────
+// ── Suite — PUT /:id/accept (admin) =
 describe("PUT /api/bookings/:id/accept", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -126,7 +126,7 @@ describe("PUT /api/bookings/:id/accept", () => {
   });
 });
 
-// ── Suite — PUT /:id/reject (admin) ───────────────────────────────────────
+// ── Suite — PUT /:id/reject (admin) 
 describe("PUT /api/bookings/:id/reject", () => {
   afterEach(() => jest.clearAllMocks());
 

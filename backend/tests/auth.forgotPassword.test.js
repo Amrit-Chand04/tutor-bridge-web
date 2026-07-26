@@ -1,8 +1,8 @@
-// ── tests/auth.forgotPassword.test.js ────────────────────────────────────
+// ── tests/auth.forgotPassword.test.js
 // Tests for  POST /api/users/forgot-password
 //        and POST /api/users/reset-password
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports
 jest.mock("../models/userModel", () => ({
   findUserByEmail: jest.fn(),
   updatePassword: jest.fn(),
@@ -24,7 +24,7 @@ jest.mock("../services/emailService", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports
 const request = require("supertest");
 const app = require("../server");
 const bcrypt = require("bcrypt");
@@ -34,7 +34,7 @@ const {
 } = require("../models/passwordResetModel");
 const { sendPasswordResetOtpEmail } = require("../services/emailService");
 
-// ── Step 3: Suite — forgot-password ───────────────────────────────────────
+// ── Step 3: Suite — forgot-password
 describe("POST /api/users/forgot-password", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -66,7 +66,7 @@ describe("POST /api/users/forgot-password", () => {
   });
 });
 
-// ── Suite — reset-password ────────────────────────────────────────────────
+// ── Suite — reset-password 
 describe("POST /api/users/reset-password", () => {
   afterEach(() => jest.clearAllMocks());
 

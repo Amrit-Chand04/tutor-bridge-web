@@ -1,8 +1,8 @@
-// ── tests/users.admin.test.js ────────────────────────────────────────────
+// ── tests/users.admin.test.js 
 // Tests for  GET /api/users        (admin only)
 //        and DELETE /api/users/:id (admin only)
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports
 jest.mock("../models/userModel", () => ({
   getAllUsers: jest.fn(),
   getUserById: jest.fn(),
@@ -16,14 +16,14 @@ jest.mock("jsonwebtoken", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports 
 const request = require("supertest");
 const app = require("../server");
 const { getAllUsers, getUserById, deleteUserById } = require("../models/userModel");
 
 const ADMIN_AUTH = "Bearer admin_token";
 
-// ── Step 3: Suite — GET /api/users ────────────────────────────────────────
+// ── Step 3: Suite — GET /api/users 
 describe("GET /api/users", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -41,7 +41,7 @@ describe("GET /api/users", () => {
     const res = await request(app).get("/api/users").set("Authorization", ADMIN_AUTH);
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.users).toHaveLength(2);
+    expect(res.body.users).toHaveLength(3);
   });
 
   test("should return 500 if the database fails", async () => {
@@ -53,7 +53,7 @@ describe("GET /api/users", () => {
   });
 });
 
-// ── Suite — DELETE /api/users/:id ─────────────────────────────────────────
+// ── Suite — DELETE /api/users/:id 
 describe("DELETE /api/users/:id", () => {
   afterEach(() => jest.clearAllMocks());
 

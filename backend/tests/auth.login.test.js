@@ -1,7 +1,7 @@
-// ── tests/auth.login.test.js ─────────────────────────────────────────────
+// ── tests/auth.login.test.js
 // Tests for  POST /api/users/login
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports
 jest.mock("../models/userModel", () => ({
   findUserByEmail: jest.fn(),
 }));
@@ -16,7 +16,7 @@ jest.mock("jsonwebtoken", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports 
 const request = require("supertest");
 const app = require("../server");
 const bcrypt = require("bcrypt");
@@ -32,7 +32,7 @@ const activeUser = {
   status: "active",
 };
 
-// ── Step 3: Suite ─────────────────────────────────────────────────────────
+// ── Step 3: Suite
 describe("POST /api/users/login", () => {
   afterEach(() => jest.clearAllMocks());
 

@@ -1,10 +1,10 @@
-// ── tests/tuitionRequest.test.js ─────────────────────────────────────────
+// ── tests/tuitionRequest.test.js 
 // Tests for  POST   /api/tuition-requests/       (student)
 //        GET     /api/tuition-requests/       (tutor)
 //        GET     /api/tuition-requests/my     (student)
 //        DELETE  /api/tuition-requests/:id    (student)
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports 
 jest.mock("../models/tuitionRequestModel", () => ({
   createTuitionRequest: jest.fn(),
   getOpenTuitionRequests: jest.fn(),
@@ -34,7 +34,7 @@ jest.mock("jsonwebtoken", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports
 const request = require("supertest");
 const app = require("../server");
 const {
@@ -58,7 +58,7 @@ const validRequest = {
   description: "Need help with algebra",
 };
 
-// ── Step 3: Suite — POST / ────────────────────────────────────────────────
+// ── Step 3: Suite — POST / 
 describe("POST /api/tuition-requests/", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -105,7 +105,7 @@ describe("POST /api/tuition-requests/", () => {
   });
 });
 
-// ── Suite — GET / (tutor) ─────────────────────────────────────────────────
+// ── Suite — GET / (tutor) 
 describe("GET /api/tuition-requests/", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -119,7 +119,7 @@ describe("GET /api/tuition-requests/", () => {
   });
 });
 
-// ── Suite — DELETE /:id ────────────────────────────────────────────────────
+// ── Suite — DELETE /:id 
 describe("DELETE /api/tuition-requests/:id", () => {
   afterEach(() => jest.clearAllMocks());
 

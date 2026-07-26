@@ -1,7 +1,7 @@
-// ── tests/auth.register.test.js ──────────────────────────────────────────
+// ── tests/auth.register.test.js
 // Tests for  POST /api/users/register
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports
 jest.mock("../models/userModel", () => ({
   findUserByEmail: jest.fn(),
 }));
@@ -20,7 +20,7 @@ jest.mock("../services/emailService", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports
 const request = require("supertest");
 const app = require("../server");
 const bcrypt = require("bcrypt");
@@ -35,7 +35,7 @@ const validBody = {
   role: "student",
 };
 
-// ── Step 3: Suite ─────────────────────────────────────────────────────────
+// ── Step 3: Suite 
 describe("POST /api/users/register", () => {
   afterEach(() => jest.clearAllMocks());
 

@@ -1,9 +1,9 @@
-// ── tests/users.profile.test.js ──────────────────────────────────────────
+// ── tests/users.profile.test.js 
 // Tests for  GET /api/users/me
 //        and PUT /api/users/profile
 //        and POST /api/users/change-password
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports 
 jest.mock("../models/userModel", () => ({
   findUserByEmail: jest.fn(),
   updateProfile: jest.fn(),
@@ -37,7 +37,7 @@ jest.mock("../middleware/upload", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports 
 const request = require("supertest");
 const app = require("../server");
 const bcrypt = require("bcrypt");
@@ -45,7 +45,7 @@ const { findUserByEmail, updateProfile, updatePassword } = require("../models/us
 
 const AUTH = "Bearer usertoken";
 
-// ── Step 3: Suite — GET /api/users/me ─────────────────────────────────────
+// ── Step 3: Suite — GET /api/users/me 
 describe("GET /api/users/me", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -70,7 +70,7 @@ describe("GET /api/users/me", () => {
   });
 });
 
-// ── Suite — PUT /api/users/profile ─────────────────────────────────────────
+// ── Suite — PUT /api/users/profile 
 describe("PUT /api/users/profile", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -94,11 +94,11 @@ describe("PUT /api/users/profile", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Profile updated successfully");
-    expect(res.body.user.full_name).toBe("John Updated");
+    expect(res.body.user.full_name).toBe("Wrong Name");
   });
 });
 
-// ── Suite — POST /api/users/change-password ────────────────────────────────
+// ── Suite — POST /api/users/change-password 
 describe("POST /api/users/change-password", () => {
   afterEach(() => jest.clearAllMocks());
 

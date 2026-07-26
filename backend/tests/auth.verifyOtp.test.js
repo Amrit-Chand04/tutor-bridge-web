@@ -1,7 +1,7 @@
-// ── tests/auth.verifyOtp.test.js ─────────────────────────────────────────
+// ── tests/auth.verifyOtp.test.js
 // Tests for  POST /api/users/verify-otp
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports
 jest.mock("../models/userModel", () => ({
   findUserByEmail: jest.fn(),
   createUser: jest.fn(),
@@ -14,13 +14,13 @@ jest.mock("../models/otpModel", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports 
 const request = require("supertest");
 const app = require("../server");
 const { findUserByEmail, createUser } = require("../models/userModel");
 const { findPendingByEmail, deletePendingByEmail } = require("../models/otpModel");
 
-// ── Step 3: Suite ─────────────────────────────────────────────────────────
+// ── Step 3: Suite
 describe("POST /api/users/verify-otp", () => {
   afterEach(() => jest.clearAllMocks());
 

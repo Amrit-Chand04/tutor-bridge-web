@@ -1,4 +1,4 @@
-// ── tests/tutorProfile.test.js ───────────────────────────────────────────
+// ── tests/tutorProfile.test.js 
 // Tests for  GET  /api/tutor-profile/me      (tutor)
 //        PUT     /api/tutor-profile/         (tutor)
 //        DELETE  /api/tutor-profile/me       (tutor)
@@ -6,7 +6,7 @@
 //        PUT     /api/tutor-profile/:id/approve  (admin)
 //        PUT     /api/tutor-profile/:id/reject   (admin)
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports 
 jest.mock("../models/tutorProfileModel", () => ({
   getProfileByUserId: jest.fn(),
   upsertProfile: jest.fn(),
@@ -43,7 +43,7 @@ jest.mock("../middleware/upload", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports 
 const request = require("supertest");
 const app = require("../server");
 const {
@@ -58,7 +58,7 @@ const {
 const TUTOR_AUTH = "Bearer tutor_token";
 const ADMIN_AUTH = "Bearer admin_token";
 
-// ── Step 3: Suite — tutor's own profile ────────────────────────────────────
+// ── Step 3: Suite — tutor's own profile 
 describe("GET /api/tutor-profile/me", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -120,7 +120,7 @@ describe("DELETE /api/tutor-profile/me", () => {
   });
 });
 
-// ── Suite — admin management ────────────────────────────────────────────────
+// ── Suite — admin management 
 describe("GET /api/tutor-profile/ (admin)", () => {
   afterEach(() => jest.clearAllMocks());
 

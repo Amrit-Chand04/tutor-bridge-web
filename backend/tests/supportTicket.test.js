@@ -1,9 +1,9 @@
-// ── tests/supportTicket.test.js ──────────────────────────────────────────
+// ── tests/supportTicket.test.js 
 // Tests for  POST  /api/support-tickets/
 //        GET     /api/support-tickets/:id
 //        POST    /api/support-tickets/:id/messages
 
-// ── Step 1: Mocks BEFORE imports ─────────────────────────────────────────
+// ── Step 1: Mocks BEFORE imports 
 jest.mock("../models/supportTicketModel", () => ({
   createTicket: jest.fn(),
   getTicketsByUser: jest.fn(),
@@ -28,7 +28,7 @@ jest.mock("jsonwebtoken", () => ({
 
 jest.mock("../config/db", () => ({ query: jest.fn() }));
 
-// ── Step 2: Imports ───────────────────────────────────────────────────────
+// ── Step 2: Imports
 const request = require("supertest");
 const app = require("../server");
 const {
@@ -41,7 +41,7 @@ const { createMessage, getMessagesByTicket } = require("../models/ticketMessageM
 const STUDENT_AUTH = "Bearer student_token";
 const ADMIN_AUTH = "Bearer admin_token";
 
-// ── Step 3: Suite — POST / ────────────────────────────────────────────────
+// ── Step 3: Suite — POST / 
 describe("POST /api/support-tickets/", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -67,7 +67,7 @@ describe("POST /api/support-tickets/", () => {
   });
 });
 
-// ── Suite — GET /:id ───────────────────────────────────────────────────────
+// ── Suite — GET /:id
 describe("GET /api/support-tickets/:id", () => {
   afterEach(() => jest.clearAllMocks());
 
@@ -99,7 +99,7 @@ describe("GET /api/support-tickets/:id", () => {
   });
 });
 
-// ── Suite — POST /:id/messages ─────────────────────────────────────────────
+// ── Suite — POST /:id/messages 
 describe("POST /api/support-tickets/:id/messages", () => {
   afterEach(() => jest.clearAllMocks());
 
